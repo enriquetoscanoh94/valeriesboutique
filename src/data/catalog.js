@@ -1,9 +1,64 @@
 export const categories = [
-  { slug: "xv", name: { es: "Vestidos de XV", en: "Quinceañera" }, description: { es: "Vestidos protagonistas para una noche inolvidable.", en: "Statement gowns for an unforgettable night." } },
-  { slug: "novias", name: { es: "Novias", en: "Bridal" }, description: { es: "Siluetas románticas para el gran día.", en: "Romantic silhouettes for the big day." } },
-  { slug: "nina", name: { es: "Niña", en: "Girls" }, description: { es: "Vestidos delicados para sus momentos especiales.", en: "Delicate dresses for her special moments." } },
-  { slug: "ramos", name: { es: "Ramos", en: "Bouquets" }, description: { es: "Flores coordinadas con tu celebración.", en: "Flowers coordinated with your celebration." } },
-  { slug: "accesorios", name: { es: "Accesorios", en: "Accessories" }, description: { es: "Los detalles que completan el look.", en: "The details that complete the look." } },
+  {
+    slug: "xv", group: "vestidos",
+    name: { es: "XV años", en: "Quinceañera" },
+    description: { es: "Vestidos de quinceañera, princesa, modernos, con brillo y en oferta.", en: "Quinceañera, princess, modern, sparkling and sale gowns." },
+    subcategories: { es: ["Quinceañera", "Princesa", "Modernos", "Con brillo", "En oferta"], en: ["Quinceañera", "Princess", "Modern", "Sparkling", "On sale"] },
+  },
+  {
+    slug: "fiesta", group: "vestidos",
+    name: { es: "Fiesta", en: "Party" },
+    description: { es: "Vestidos largos, cortos, juveniles, para damas y eventos especiales.", en: "Long, short and youthful dresses for bridesmaids and special events." },
+    subcategories: { es: ["Largos", "Cortos", "Juveniles", "Para damas", "Eventos especiales"], en: ["Long", "Short", "Youth", "Bridesmaids", "Special events"] },
+  },
+  {
+    slug: "novias", group: "vestidos",
+    name: { es: "Novias", en: "Bridal" },
+    description: { es: "Vestidos clásicos, modernos, princesa, sencillos y con encaje.", en: "Classic, modern, princess, simple and lace wedding gowns." },
+    subcategories: { es: ["Clásicos", "Modernos", "Princesa", "Sencillos", "Con encaje"], en: ["Classic", "Modern", "Princess", "Simple", "Lace"] },
+  },
+  {
+    slug: "nina", group: "vestidos",
+    name: { es: "Niñas", en: "Girls" },
+    description: { es: "Vestidos de fiesta, ceremonia, presentación y para damitas.", en: "Party, ceremony, presentation and flower girl dresses." },
+    subcategories: { es: ["Fiesta", "Ceremonia", "Presentación", "Damitas"], en: ["Party", "Ceremony", "Presentation", "Flower girls"] },
+  },
+  {
+    slug: "bautizo-ninos",
+    name: { es: "Bautizo y niños", en: "Baptism & boys" },
+    description: { es: "Ropones, conjuntos de bautizo y trajes formales para niño.", en: "Christening gowns, baptism sets and formal suits for boys." },
+    subcategories: { es: ["Ropones para niña", "Ropones para niño", "Conjuntos de bautizo", "Trajes formales", "Primera comunión"], en: ["Girls christening gowns", "Boys christening outfits", "Baptism sets", "Formal suits", "First communion"] },
+  },
+  {
+    slug: "ramos",
+    name: { es: "Ramos", en: "Bouquets" },
+    description: { es: "Ramos para XV, novia, damas y mini ramos personalizados.", en: "Bouquets for quince, brides, bridesmaids and personalized mini bouquets." },
+    subcategories: { es: ["XV años", "Novia", "Damas", "Mini ramos", "Personalizados"], en: ["Quince", "Bridal", "Bridesmaids", "Mini bouquets", "Personalized"] },
+  },
+  {
+    slug: "accesorios",
+    name: { es: "Accesorios", en: "Accessories" },
+    description: { es: "Accesorios para XV, novia, recuerdos y ceremonia.", en: "Accessories for quince, brides, keepsakes and ceremonies." },
+    subcategories: { es: ["Coronas y tiaras", "Velos y lazos", "Cojines", "Velas", "Biblias y rosarios", "Libros y cajas"], en: ["Crowns & tiaras", "Veils & bows", "Pillows", "Candles", "Bibles & rosaries", "Books & boxes"] },
+  },
+  {
+    slug: "corsages",
+    name: { es: "Corsages", en: "Corsages" },
+    description: { es: "Corsages, boutonnières y diseños florales personalizados.", en: "Corsages, boutonnières and personalized floral designs." },
+    subcategories: { es: ["Novia", "Novio", "Damas", "Padrinos", "Boutonnières", "Personalizados"], en: ["Bride", "Groom", "Bridesmaids", "Sponsors", "Boutonnières", "Personalized"] },
+  },
+  {
+    slug: "brindis",
+    name: { es: "Brindis", en: "Toastware" },
+    description: { es: "Copas, juegos, jarras decoradas y accesorios para brindis.", en: "Glasses, sets, decorated pitchers and toast accessories." },
+    subcategories: { es: ["Copas para XV", "Copas para novios", "Juegos de copas", "Jarras decoradas", "Personalizados"], en: ["Quince glasses", "Wedding glasses", "Glass sets", "Decorated pitchers", "Personalized"] },
+  },
+  {
+    slug: "promociones",
+    name: { es: "Promociones", en: "Promotions" },
+    description: { es: "Ofertas, paquetes, últimas piezas y productos de temporada.", en: "Offers, event packages, last pieces and seasonal products." },
+    subcategories: { es: ["Ofertas", "Paquetes de XV", "Paquetes de boda", "Paquetes de bautizo", "Últimas piezas", "Temporada"], en: ["Offers", "Quince packages", "Wedding packages", "Baptism packages", "Last pieces", "Seasonal"] },
+  },
 ]
 
 export const products = [

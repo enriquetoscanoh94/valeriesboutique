@@ -3,12 +3,13 @@ import { Link, NavLink, useLocation } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 import { useLanguage } from "../context/LanguageContext"
 import { BagIcon, CloseIcon, MenuIcon, SearchIcon } from "./Icons"
+import { categories } from "../data/catalog"
 
 export default function Header() {
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
   const { itemCount } = useCart()
-  const { language, toggleLanguage, t } = useLanguage()
+  const { language, localize, toggleLanguage, t } = useLanguage()
 
   useEffect(() => setOpen(false), [pathname])
   useEffect(() => {
@@ -16,13 +17,8 @@ export default function Header() {
     return () => document.body.classList.remove("menu-open")
   }, [open])
 
-  const links = [
-    ["/categoria/xv", t.nav.quince],
-    ["/categoria/novias", t.nav.bridal],
-    ["/categoria/nina", t.nav.girls],
-    ["/categoria/ramos", t.nav.bouquets],
-    ["/categoria/accesorios", t.nav.accessories],
-  ]
+  const dressCategories = categories.filter((category) => category.group === "vestidos")
+  const primaryCategories = categories.filter((category) => category.group !== "vestidos")
 
   return (
     <>
@@ -36,7 +32,13 @@ export default function Header() {
             <img src={`${import.meta.env.BASE_URL}logo-letrero.png`} alt="Valerie's Boutique" />
           </Link>
           <nav className="desktop-nav" aria-label="Principal">
-            {links.map(([to, label]) => <NavLink key={to} to={to}>{label}</NavLink>)}
+            <div className="nav-dropdown">
+              <button type="button">{t.nav.dresses}<span aria-hidden="true">⌄</span></button>
+              <div className="nav-dropdown-panel">
+                {dressCategories.map((category) => <NavLink key={category.slug} to={`/categoria/${category.slug}`}>{localize(category.name)}</NavLink>)}
+              </div>
+            </div>
+            {primaryCategories.map((category) => <NavLink key={category.slug} to={`/categoria/${category.slug}`}>{localize(category.name)}</NavLink>)}
           </nav>
           <div className="header-actions">
             <button className="language-button" onClick={toggleLanguage} aria-label={language === "es" ? "Switch to English" : "Cambiar a español"}>
@@ -58,7 +60,10 @@ export default function Header() {
         </div>
         <nav aria-label="Móvil">
           <NavLink to="/">{t.nav.home}</NavLink>
-          {links.map(([to, label]) => <NavLink key={to} to={to}>{label}</NavLink>)}
+          <p className="mobile-menu-label">{t.nav.dresses}</p>
+          {dressCategories.map((category) => <NavLink key={category.slug} to={`/categoria/${category.slug}`}>{localize(category.name)}</NavLink>)}
+          <p className="mobile-menu-label">{language === "es" ? "Más categorías" : "More categories"}</p>
+          {primaryCategories.map((category) => <NavLink key={category.slug} to={`/categoria/${category.slug}`}>{localize(category.name)}</NavLink>)}
           <NavLink to="/carrito">{t.actions.cart} {itemCount > 0 && `(${itemCount})`}</NavLink>
         </nav>
         <div className="mobile-menu-contact">

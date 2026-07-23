@@ -1,7 +1,7 @@
 export const translations = {
   es: {
     announcement: "Recoge en tienda · Salinas, CA · Paga en 4 pagos sin interés",
-    nav: { home: "Inicio", dresses: "Vestidos", quince: "XV", bridal: "Novias", girls: "Niña", bouquets: "Ramos", accessories: "Accesorios" },
+    nav: { home: "Inicio", dresses: "Vestidos", quince: "XV", party: "Fiesta", bridal: "Novias", girls: "Niñas", baptism: "Bautizo y niños", bouquets: "Ramos", accessories: "Accesorios", corsages: "Corsages", toastware: "Brindis", promotions: "Promociones" },
     actions: { menu: "Abrir menú", close: "Cerrar menú", search: "Buscar", cart: "Carrito", view: "Ver detalles", add: "Agregar al carrito", continue: "Seguir comprando", checkout: "Continuar al checkout", back: "Volver", remove: "Eliminar" },
     home: {
       kicker: "Valerie's Boutique · Salinas, California",
@@ -28,7 +28,7 @@ export const translations = {
   },
   en: {
     announcement: "Store pickup · Salinas, CA · Pay in 4 interest-free payments",
-    nav: { home: "Home", dresses: "Dresses", quince: "Quince", bridal: "Bridal", girls: "Girls", bouquets: "Bouquets", accessories: "Accessories" },
+    nav: { home: "Home", dresses: "Dresses", quince: "Quince", party: "Party", bridal: "Bridal", girls: "Girls", baptism: "Baptism & boys", bouquets: "Bouquets", accessories: "Accessories", corsages: "Corsages", toastware: "Toastware", promotions: "Promotions" },
     actions: { menu: "Open menu", close: "Close menu", search: "Search", cart: "Cart", view: "View details", add: "Add to cart", continue: "Continue shopping", checkout: "Continue to checkout", back: "Back", remove: "Remove" },
     home: {
       kicker: "Valerie's Boutique · Salinas, California",

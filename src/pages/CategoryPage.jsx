@@ -21,7 +21,12 @@ export default function CategoryPage() {
   if (!category) return <Navigate to="/404" replace />
   return (
     <div className="catalog-page">
-      <header className="catalog-hero"><p className="eyebrow">{t.catalog.eyebrow}</p><h1>{localize(category.name)}</h1><p>{localize(category.description)}</p></header>
+      <header className="catalog-hero">
+        <p className="eyebrow">{t.catalog.eyebrow}</p>
+        <h1>{localize(category.name)}</h1>
+        <p>{localize(category.description)}</p>
+        <div className="subcategory-list">{localize(category.subcategories).map((item) => <span key={item}>{item}</span>)}</div>
+      </header>
       <div className="category-tabs" aria-label={t.home.categories}>{categories.map((item) => <Link key={item.slug} className={item.slug === slug ? "active" : ""} to={`/categoria/${item.slug}`}>{localize(item.name)}</Link>)}</div>
       <section className="section catalog-content">
         <div className="catalog-toolbar">
