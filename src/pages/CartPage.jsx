@@ -22,7 +22,7 @@ export default function CartPage() {
               </div><p className="cart-line-price">${(item.product.price * item.quantity).toFixed(2)}</p>
             </article>
           ))}</div>
-          <aside className="cart-summary"><h2>{t.cart.total}</h2><div><span>{t.cart.subtotal}</span><strong>${subtotal.toFixed(2)}</strong></div><div><span>{t.cart.pickup}</span><strong>$0.00</strong></div><div className="summary-total"><span>Total</span><strong>${subtotal.toFixed(2)}</strong></div><p>{t.cart.note}</p><button className="button button-dark" disabled>{t.actions.checkout} · Próximamente</button><Link className="continue-link" to="/categoria/xv">← {t.actions.continue}</Link></aside>
+          <aside className="cart-summary"><h2>{t.cart.total}</h2><div><span>{t.cart.subtotal}</span><strong>${subtotal.toFixed(2)}</strong></div><div><span>{t.cart.delivery}</span><strong>{t.cart.calculated}</strong></div><p className="delivery-copy">{t.cart.shipping}</p><div className="summary-total"><span>Total</span><strong>${subtotal.toFixed(2)}*</strong></div><p>{t.cart.note}</p><button className="button button-dark" disabled>{t.actions.checkout} · Próximamente</button><Link className="continue-link" to="/categoria/xv">← {t.actions.continue}</Link></aside>
         </div>
       )}
     </div>

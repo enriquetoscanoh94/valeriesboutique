@@ -20,6 +20,7 @@ export default function Footer() {
           <div>
             <h2>{t.footer.hours}</h2>
             <p className="muted">{t.footer.schedule}</p>
+            <Link to="/visita-citas">{t.actions.policies}</Link>
             <div className="social-links">
               <a href="https://www.instagram.com/valeries._boutique_/" target="_blank" rel="noreferrer">Instagram</a>
               <a href="https://www.tiktok.com/@valeries..boutique" target="_blank" rel="noreferrer">TikTok</a>

@@ -64,6 +64,7 @@ export default function Header() {
           {dressCategories.map((category) => <NavLink key={category.slug} to={`/categoria/${category.slug}`}>{localize(category.name)}</NavLink>)}
           <p className="mobile-menu-label">{language === "es" ? "Más categorías" : "More categories"}</p>
           {primaryCategories.map((category) => <NavLink key={category.slug} to={`/categoria/${category.slug}`}>{localize(category.name)}</NavLink>)}
+          <NavLink to="/visita-citas">{t.actions.policies}</NavLink>
           <NavLink to="/carrito">{t.actions.cart} {itemCount > 0 && `(${itemCount})`}</NavLink>
         </nav>
         <div className="mobile-menu-contact">

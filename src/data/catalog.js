@@ -7,6 +7,7 @@ export const categories = [
   },
   {
     slug: "fiesta", group: "vestidos",
+    coverImage: "categorias/fiesta.webp",
     name: { es: "Fiesta", en: "Party" },
     description: { es: "Vestidos largos, cortos, juveniles, para damas y eventos especiales.", en: "Long, short and youthful dresses for bridesmaids and special events." },
     subcategories: { es: ["Largos", "Cortos", "Juveniles", "Para damas", "Eventos especiales"], en: ["Long", "Short", "Youth", "Bridesmaids", "Special events"] },
@@ -25,6 +26,7 @@ export const categories = [
   },
   {
     slug: "bautizo-ninos",
+    coverImage: "categorias/bautizo-ninos.webp",
     name: { es: "Bautizo y niños", en: "Baptism & boys" },
     description: { es: "Ropones, conjuntos de bautizo y trajes formales para niño.", en: "Christening gowns, baptism sets and formal suits for boys." },
     subcategories: { es: ["Ropones para niña", "Ropones para niño", "Conjuntos de bautizo", "Trajes formales", "Primera comunión"], en: ["Girls christening gowns", "Boys christening outfits", "Baptism sets", "Formal suits", "First communion"] },
@@ -43,18 +45,21 @@ export const categories = [
   },
   {
     slug: "corsages",
+    coverImage: "categorias/corsages.webp",
     name: { es: "Corsages", en: "Corsages" },
     description: { es: "Corsages, boutonnières y diseños florales personalizados.", en: "Corsages, boutonnières and personalized floral designs." },
     subcategories: { es: ["Novia", "Novio", "Damas", "Padrinos", "Boutonnières", "Personalizados"], en: ["Bride", "Groom", "Bridesmaids", "Sponsors", "Boutonnières", "Personalized"] },
   },
   {
     slug: "brindis",
+    coverImage: "categorias/brindis.webp",
     name: { es: "Brindis", en: "Toastware" },
     description: { es: "Copas, juegos, jarras decoradas y accesorios para brindis.", en: "Glasses, sets, decorated pitchers and toast accessories." },
     subcategories: { es: ["Copas para XV", "Copas para novios", "Juegos de copas", "Jarras decoradas", "Personalizados"], en: ["Quince glasses", "Wedding glasses", "Glass sets", "Decorated pitchers", "Personalized"] },
   },
   {
     slug: "promociones",
+    coverImage: "categorias/promociones.webp",
     name: { es: "Promociones", en: "Promotions" },
     description: { es: "Ofertas, paquetes, últimas piezas y productos de temporada.", en: "Offers, event packages, last pieces and seasonal products." },
     subcategories: { es: ["Ofertas", "Paquetes de XV", "Paquetes de boda", "Paquetes de bautizo", "Últimas piezas", "Temporada"], en: ["Offers", "Quince packages", "Wedding packages", "Baptism packages", "Last pieces", "Seasonal"] },

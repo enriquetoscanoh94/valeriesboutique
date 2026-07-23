@@ -32,7 +32,12 @@ export default function CategoryPage() {
           <p>{sortedProducts.length} {t.catalog.results}</p>
           <label><span>{t.catalog.sort}</span><select value={sort} onChange={(event) => setSort(event.target.value)}><option value="featured">{t.catalog.featured}</option><option value="low">{t.catalog.priceLow}</option><option value="high">{t.catalog.priceHigh}</option></select></label>
         </div>
-        {sortedProducts.length > 0 ? <div className="product-grid catalog-grid">{sortedProducts.map((product) => <ProductCard key={product.id} product={product} />)}</div> : <div className="empty-state"><h2>{t.catalog.empty}</h2><Link className="button button-dark" to="/">{t.actions.back}</Link></div>}
+        {sortedProducts.length > 0 ? <div className="product-grid catalog-grid">{sortedProducts.map((product) => <ProductCard key={product.id} product={product} />)}</div> : (
+          <div className="empty-state">
+            {category.coverImage && <img src={`${import.meta.env.BASE_URL}${category.coverImage}`} alt={localize(category.name)} />}
+            <div><h2>{t.catalog.empty}</h2><p>{t.catalog.emptyNote}</p><Link className="button button-dark" to="/">{t.actions.back}</Link></div>
+          </div>
+        )}
       </section>
     </div>
   )

@@ -13,7 +13,7 @@ Tienda en línea (e-commerce) para boutique de eventos en Salinas, CA.
 | Teléfono | (831) 998-0610 |
 | WhatsApp | (831) 998-0610 (mismo número) |
 | Correo | *pendiente* (se crea con el dominio) |
-| Horario | Lun – Sáb · 11am – 6pm *(confirmar)* |
+| Horario | Lun – Vie · 12pm – 7pm · Sáb · 12pm – 5pm · Domingo cerrado |
 | Instagram | @valeries._boutique_ |
 | TikTok | @valeries..boutique |
 | Giro | XV, novias, fiesta, niña, bautizo, ramos, accesorios, brindis |
@@ -31,10 +31,12 @@ Tienda en línea (e-commerce) para boutique de eventos en Salinas, CA.
 - **Solo venta** (sin renta).
 - **Bilingüe** español / inglés (botón ES/EN).
 - **Pago:** Stripe Checkout + **pagos a plazos** (Afterpay / Klarna / Affirm, incluidos en Stripe).
-- **Entrega:** recoger en tienda (v1) + envío por API de UPS (se agrega al final).
+- **Entrega:** envíos a domicilio en todo Estados Unidos + recoger en boutique.
 - **Soporte:** FAQ + botón flotante de WhatsApp (no chat en vivo).
 - **Login:** con Google.
 - **Roles:** admin (Enrique/Valerie) y cliente.
+- **Visitas:** no se requiere cita para entrar y mirar productos.
+- **Pruebas de vestidos:** solo con cita; cargo de $50, descontable al comprar u ordenar un vestido y no reembolsable si no hay compra.
 
 ---
 
@@ -139,7 +141,7 @@ Vestidos (XV, fiesta, novia, niña) · Bautizo y niños (ropones, trajes) · Ram
 
 ## 8. Pendiente de la clienta
 
-- Correo con dominio · Horario exacto · Política de devoluciones · ¿Apartados/anticipos? · ¿Ajustes/alteraciones? · Guía de tallas · Política de citas · Reglas de tienda · Texto de "Nosotros" · Fotos y precios reales de los productos.
+- Correo con dominio · Política de devoluciones · ¿Apartados/anticipos? · ¿Ajustes/alteraciones? · Guía de tallas · Reglas completas de tienda · Texto de "Nosotros" · Fotos y precios reales de los productos · método y tarifas de envío.
 
 ---
 

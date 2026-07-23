@@ -10,7 +10,7 @@ Familias latinas de Salinas, CA y alrededores (Monterey County) que preparan una
 
 ## Product Purpose
 
-Tienda en línea de Valerie's Boutique (19 W Market St, Salinas, CA). La página debe vender sola: foto + descripción + precio en cada producto, pago con Stripe y a plazos (Afterpay/Klarna), recoger en tienda. El Home es la vitrina: debe causar la impresión de una boutique de lujo y llevar a la clienta a ver vestidos y accesorios.
+Tienda en línea de Valerie's Boutique (19 W Market St, Salinas, CA). La página debe vender sola: foto + descripción + precio en cada producto, pago con Stripe y a plazos (Afterpay/Klarna), envíos a todo Estados Unidos y opción de recoger en boutique. El Home es la vitrina: debe causar la impresión de una boutique de lujo y llevar a la clienta a ver vestidos y accesorios.
 
 ## Brand Personality
 

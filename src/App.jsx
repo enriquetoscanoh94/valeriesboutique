@@ -7,6 +7,7 @@ import CategoryPage from "./pages/CategoryPage"
 import HomePage from "./pages/HomePage"
 import NotFoundPage from "./pages/NotFoundPage"
 import ProductPage from "./pages/ProductPage"
+import PoliciesPage from "./pages/PoliciesPage"
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { path: "categoria/:slug", element: <CategoryPage /> },
       { path: "producto/:id", element: <ProductPage /> },
       { path: "carrito", element: <CartPage /> },
+      { path: "visita-citas", element: <PoliciesPage /> },
       { path: "404", element: <NotFoundPage /> },
       { path: "*", element: <NotFoundPage /> },
     ],

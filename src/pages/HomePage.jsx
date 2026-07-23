@@ -14,6 +14,7 @@ export default function HomePage() {
   const featured = products.filter((product) => product.featured)
   const rest = products.filter((product) => !product.featured)
   const asset = (path) => `${import.meta.env.BASE_URL}${path}`
+  const categoryImage = (category) => category.coverImage || products.find((product) => product.category === category.slug)?.images[0]
 
   return (
     <>
@@ -39,7 +40,14 @@ export default function HomePage() {
 
       <section className="section category-section">
         <div className="section-heading"><p className="eyebrow">Valerie&apos;s Boutique</p><h2>{t.home.categories}</h2></div>
-        <div className="category-links">{categories.map((category) => <Link key={category.slug} to={`/categoria/${category.slug}`}>{localize(category.name)}</Link>)}</div>
+        <div className="category-links">
+          {categories.map((category) => (
+            <Link key={category.slug} to={`/categoria/${category.slug}`}>
+              <img src={asset(categoryImage(category))} alt="" loading="lazy" />
+              <span>{localize(category.name)}</span>
+            </Link>
+          ))}
+        </div>
       </section>
 
       <section className="section section-tint">
@@ -58,6 +66,14 @@ export default function HomePage() {
           <p className="eyebrow">19 W Market St · Salinas</p>
           <h2>{t.home.storyTitle}</h2><p>{t.home.story}</p>
           <a className="text-link" href="https://maps.google.com/?q=19+W+Market+St+Salinas+CA+93901" target="_blank" rel="noreferrer">{t.home.directions} →</a>
+        </div>
+      </section>
+
+      <section className="section service-section">
+        <div className="section-heading"><p className="eyebrow">Online & in store</p><h2>{t.home.serviceTitle}</h2></div>
+        <div className="service-grid">
+          <article><span>01</span><h3>{t.home.onlineTitle}</h3><p>{t.home.onlineText}</p><Link className="text-link" to="/categoria/xv">{t.actions.continue} →</Link></article>
+          <article><span>02</span><h3>{t.home.storeTitle}</h3><p>{t.home.storeText}</p><Link className="text-link" to="/visita-citas">{t.actions.policies} →</Link></article>
         </div>
       </section>
 

@@ -52,7 +52,7 @@ export default function ProductPage() {
             <button className="button button-dark add-button" onClick={handleAdd}>{added ? `✓ ${t.product.added}` : t.actions.add}</button>
           </div>
           {error && <p className="form-error" role="alert">{error}</p>}
-          <div className="pickup-note"><span>⌂</span><p>{t.product.pickup}<small>19 W Market St · Salinas, CA</small></p></div>
+          <div className="pickup-note"><span>⌂</span><p>{t.product.pickup}<small>{t.product.shippingNote} · 19 W Market St, Salinas, CA</small></p></div>
         </div>
       </section>
       {related.length > 0 && <section className="section related-products"><div className="section-heading"><p className="eyebrow">Complete the look</p><h2>{t.product.related}</h2></div><div className="product-grid">{related.map((item) => <ProductCard key={item.id} product={item} />)}</div></section>}
