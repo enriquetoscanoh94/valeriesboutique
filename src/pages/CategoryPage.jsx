@@ -2,7 +2,7 @@ import { useMemo, useState } from "react"
 import { Link, Navigate, useParams } from "react-router-dom"
 import ProductCard from "../components/ProductCard"
 import { useLanguage } from "../context/LanguageContext"
-import { categories, getCategory, getProductsByCategory } from "../data/catalog"
+import { getCategory, getProductsByCategory } from "../data/catalog"
 
 export default function CategoryPage() {
   const { slug } = useParams()
@@ -27,7 +27,6 @@ export default function CategoryPage() {
         <p>{localize(category.description)}</p>
         <div className="subcategory-list">{localize(category.subcategories).map((item) => <span key={item}>{item}</span>)}</div>
       </header>
-      <div className="category-tabs" aria-label={t.home.categories}>{categories.map((item) => <Link key={item.slug} className={item.slug === slug ? "active" : ""} to={`/categoria/${item.slug}`}>{localize(item.name)}</Link>)}</div>
       <section className="section catalog-content">
         <div className="catalog-toolbar">
           <p>{sortedProducts.length} {t.catalog.results}</p>
