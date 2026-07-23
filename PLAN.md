@@ -125,10 +125,11 @@ Vestidos (XV, fiesta, novia, niña) · Bautizo y niños (ropones, trajes) · Ram
 - [x] Investigación de competencia (5 boutiques de California con carrito)
 - [x] Logo retocado (negro + transparente)
 - [x] Proyecto React + Vite + Tailwind creado
-- [x] **Home construido** (bilingüe, 6 productos IA de muestra, WhatsApp, footer)
-- [ ] Página de categoría (lista + filtros)
-- [ ] Página de producto (galería + tallas + colores)
-- [ ] Carrito y checkout
+- [x] **Home construido** (bilingüe, navegación móvil, 6 productos IA de muestra, WhatsApp, footer)
+- [x] Página de categoría (lista + ordenamiento)
+- [x] Página de producto (galería + tallas + colores)
+- [x] Carrito local persistente
+- [ ] Checkout
 - [ ] Firebase (Auth Google + Firestore + Storage)
 - [ ] Panel admin (subir productos)
 - [ ] Stripe (Cloud Functions + pagos a plazos)
