@@ -2,7 +2,7 @@ export const translations = {
   es: {
     announcement: "Envíos a todo Estados Unidos · Compra online o recoge en Salinas, CA",
     nav: { home: "Inicio", dresses: "Vestidos", quince: "XV", party: "Fiesta", bridal: "Novias", girls: "Niñas", baptism: "Bautizo y niños", bouquets: "Ramos", accessories: "Accesorios", corsages: "Corsages", toastware: "Brindis", promotions: "Promociones" },
-    actions: { menu: "Abrir menú", close: "Cerrar menú", search: "Buscar", cart: "Carrito", view: "Ver detalles", add: "Agregar al carrito", continue: "Seguir comprando", checkout: "Continuar al checkout", back: "Volver", remove: "Eliminar", appointment: "Solicitar cita por Instagram", policies: "Visita y citas" },
+    actions: { menu: "Abrir menú", close: "Cerrar menú", search: "Buscar", cart: "Carrito", view: "Ver detalles", add: "Agregar al carrito", continue: "Seguir comprando", checkout: "Continuar al checkout", back: "Volver", remove: "Eliminar", appointment: "Solicitar cita por Instagram", policies: "Visita y citas", availability: "Consultar disponibilidad" },
     home: {
       kicker: "Valerie's Boutique · Salinas, California",
       title1: "El vestido perfecto",
@@ -25,7 +25,7 @@ export const translations = {
       storeTitle: "Visita la boutique",
       storeText: "Puedes entrar a conocer la selección sin cita. Para probarte vestidos necesitas reservar una cita por mensaje directo.",
     },
-    catalog: { eyebrow: "Colección", all: "Todos", empty: "Estamos preparando productos reales para esta categoría.", emptyNote: "Esta imagen representa la categoría y no es un producto disponible para compra.", results: "productos", sort: "Ordenar", featured: "Destacados", priceLow: "Precio: menor a mayor", priceHigh: "Precio: mayor a menor" },
+    catalog: { eyebrow: "Colección", all: "Todos", empty: "Descubre opciones para tu celebración", result: "producto", results: "productos", sort: "Ordenar", featured: "Destacados", priceLow: "Precio: menor a mayor", priceHigh: "Precio: mayor a menor" },
     product: { selectSize: "Selecciona talla", selectColor: "Selecciona color", sizeRequired: "Elige una talla para continuar.", colorRequired: "Elige un color para continuar.", pickup: "Envío a todo Estados Unidos o recoge en nuestra boutique", shippingNote: "El costo de envío se confirma antes del pago.", payments: "o 4 pagos de", details: "Detalles del producto", related: "También te puede gustar", added: "Agregado al carrito" },
     cart: { title: "Tu carrito", empty: "Tu carrito está esperando algo especial.", subtotal: "Subtotal", delivery: "Entrega", shipping: "Envío a EE. UU. o recoger en boutique", calculated: "Se confirma antes del pago", total: "Total estimado", note: "El costo de envío, los impuestos y la disponibilidad final se confirman antes del pago.", size: "Talla", color: "Color", quantity: "Cantidad", item: "artículo", items: "artículos" },
     footer: { visit: "Visítanos", hours: "Horario", schedule: "Lun–Vie · 12pm–7pm · Sáb · 12pm–5pm · Domingo cerrado", secure: "Envíos a todo EE. UU. · Atención personalizada" },
@@ -35,7 +35,7 @@ export const translations = {
   en: {
     announcement: "Shipping across the United States · Shop online or pick up in Salinas, CA",
     nav: { home: "Home", dresses: "Dresses", quince: "Quince", party: "Party", bridal: "Bridal", girls: "Girls", baptism: "Baptism & boys", bouquets: "Bouquets", accessories: "Accessories", corsages: "Corsages", toastware: "Toastware", promotions: "Promotions" },
-    actions: { menu: "Open menu", close: "Close menu", search: "Search", cart: "Cart", view: "View details", add: "Add to cart", continue: "Continue shopping", checkout: "Continue to checkout", back: "Back", remove: "Remove", appointment: "Request via Instagram", policies: "Visit & appointments" },
+    actions: { menu: "Open menu", close: "Close menu", search: "Search", cart: "Cart", view: "View details", add: "Add to cart", continue: "Continue shopping", checkout: "Continue to checkout", back: "Back", remove: "Remove", appointment: "Request via Instagram", policies: "Visit & appointments", availability: "Check availability" },
     home: {
       kicker: "Valerie's Boutique · Salinas, California",
       title1: "The perfect dress",
@@ -58,7 +58,7 @@ export const translations = {
       storeTitle: "Visit the boutique",
       storeText: "You may visit and browse without an appointment. Dress fittings require an appointment booked by direct message.",
     },
-    catalog: { eyebrow: "Collection", all: "All", empty: "We're preparing real products for this category.", emptyNote: "This image represents the category and is not a product available for purchase.", results: "products", sort: "Sort", featured: "Featured", priceLow: "Price: low to high", priceHigh: "Price: high to low" },
+    catalog: { eyebrow: "Collection", all: "All", empty: "Discover options for your celebration", result: "product", results: "products", sort: "Sort", featured: "Featured", priceLow: "Price: low to high", priceHigh: "Price: high to low" },
     product: { selectSize: "Select size", selectColor: "Select color", sizeRequired: "Choose a size to continue.", colorRequired: "Choose a color to continue.", pickup: "Shipping across the United States or boutique pickup", shippingNote: "Shipping cost is confirmed before payment.", payments: "or 4 payments of", details: "Product details", related: "You may also like", added: "Added to cart" },
     cart: { title: "Your cart", empty: "Your cart is waiting for something special.", subtotal: "Subtotal", delivery: "Delivery", shipping: "U.S. shipping or boutique pickup", calculated: "Confirmed before payment", total: "Estimated total", note: "Shipping cost, taxes and final availability are confirmed before payment.", size: "Size", color: "Color", quantity: "Quantity", item: "item", items: "items" },
     footer: { visit: "Visit us", hours: "Hours", schedule: "Mon–Fri · 12pm–7pm · Sat · 12pm–5pm · Sunday closed", secure: "Shipping across the U.S. · Personal service" },

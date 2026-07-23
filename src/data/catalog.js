@@ -41,7 +41,7 @@ export const categories = [
     slug: "accesorios",
     name: { es: "Accesorios", en: "Accessories" },
     description: { es: "Accesorios para XV, novia, recuerdos y ceremonia.", en: "Accessories for quince, brides, keepsakes and ceremonies." },
-    subcategories: { es: ["Coronas y tiaras", "Velos y lazos", "Cojines", "Velas", "Biblias y rosarios", "Libros y cajas"], en: ["Crowns & tiaras", "Veils & bows", "Pillows", "Candles", "Bibles & rosaries", "Books & boxes"] },
+    subcategories: { es: ["Coronas y tiaras", "Velos y lazos ceremoniales", "Cojines", "Velas", "Biblias y rosarios", "Libros, álbumes y cajas"], en: ["Crowns & tiaras", "Ceremonial veils & lassos", "Pillows", "Candles", "Bibles & rosaries", "Books, albums & boxes"] },
   },
   {
     slug: "corsages",
@@ -66,10 +66,93 @@ export const categories = [
   },
 ]
 
+const palette = {
+  blush: { name: { es: "Rosa", en: "Blush" }, value: "rosa", hex: "#d99aaa" },
+  ivory: { name: { es: "Marfil", en: "Ivory" }, value: "marfil", hex: "#f5efe4" },
+  white: { name: { es: "Blanco", en: "White" }, value: "blanco", hex: "#ffffff" },
+  navy: { name: { es: "Azul marino", en: "Navy" }, value: "azul-marino", hex: "#18284a" },
+  royal: { name: { es: "Azul real", en: "Royal blue" }, value: "azul-real", hex: "#244aa5" },
+  green: { name: { es: "Verde esmeralda", en: "Emerald" }, value: "esmeralda", hex: "#07583d" },
+  burgundy: { name: { es: "Vino", en: "Burgundy" }, value: "vino", hex: "#722f45" },
+  lavender: { name: { es: "Lavanda", en: "Lavender" }, value: "lavanda", hex: "#b9a4cf" },
+  champagne: { name: { es: "Champaña", en: "Champagne" }, value: "champana", hex: "#d9bd86" },
+  black: { name: { es: "Negro", en: "Black" }, value: "negro", hex: "#171415" },
+  sage: { name: { es: "Verde salvia", en: "Sage" }, value: "salvia", hex: "#9aaa8c" },
+  plum: { name: { es: "Ciruela", en: "Plum" }, value: "ciruela", hex: "#563349" },
+}
+
+const makeProduct = ({ id, category, subcategory, es, en, descriptionEs, descriptionEn, price, image, colors, sizes = [], badge, featured = false }) => ({
+  id,
+  category,
+  subcategory: String(subcategory),
+  name: { es, en },
+  description: { es: descriptionEs, en: descriptionEn },
+  price,
+  images: [`productos/${image}`],
+  sizes,
+  colors,
+  featured,
+  badge: { es: badge.es, en: badge.en },
+})
+
+const expandedProducts = [
+  makeProduct({ id: "vestido-xv-clasico", category: "xv", subcategory: 0, es: "Vestido de XV Clásico Rosa", en: "Classic Blush Quince Gown", descriptionEs: "Vestido de XV en tul rosa con corsé estructurado, aplicaciones florales y tirantes desmontables.", descriptionEn: "Blush tulle quince gown with a structured corset, floral appliqués and detachable straps.", price: 499, image: "xv-clasico.webp", colors: [palette.blush, palette.royal, palette.burgundy], sizes: ["4", "6", "8", "10", "12", "14"], badge: { es: "Quinceañera", en: "Quinceañera" } }),
+  makeProduct({ id: "vestido-xv-moderno", category: "xv", subcategory: 2, es: "Vestido de XV Moderno Azul", en: "Modern Blue Quince Gown", descriptionEs: "Diseño moderno en tul azul con corsé drapeado, cintura definida y brillo discreto.", descriptionEn: "Modern blue tulle design with a draped corset, defined waist and subtle sparkle.", price: 549, image: "xv-moderno.webp", colors: [palette.royal, palette.blush, palette.lavender], sizes: ["4", "6", "8", "10", "12", "14"], badge: { es: "Modernos", en: "Modern" } }),
+  makeProduct({ id: "vestido-xv-brillo", category: "xv", subcategory: 3, es: "Vestido de XV Esmeralda con Brillo", en: "Sparkling Emerald Quince Gown", descriptionEs: "Corsé con pedrería y falda amplia de tul con brillo en color verde esmeralda.", descriptionEn: "Beaded corset and full glitter-tulle skirt in rich emerald green.", price: 625, image: "xv-brillo.webp", colors: [palette.green, palette.royal, palette.burgundy], sizes: ["4", "6", "8", "10", "12", "14"], badge: { es: "Con brillo", en: "Sparkling" } }),
+  makeProduct({ id: "vestido-xv-oferta", category: "xv", subcategory: 4, es: "Vestido de XV Vino en Oferta", en: "Burgundy Quince Gown Sale", descriptionEs: "Vestido color vino de colección anterior con corsé de encaje y falda de tul.", descriptionEn: "Previous-collection burgundy gown with a lace corset and full tulle skirt.", price: 399, image: "xv-oferta.webp", colors: [palette.burgundy], sizes: ["6", "10", "14"], badge: { es: "En oferta", en: "On sale" } }),
+
+  makeProduct({ id: "vestido-fiesta-largo", category: "fiesta", subcategory: 0, es: "Vestido Largo Azul Marino", en: "Navy One-Shoulder Gown", descriptionEs: "Vestido largo de satén con escote de un hombro, cintura drapeada y abertura discreta.", descriptionEn: "Long satin gown with a one-shoulder neckline, draped waist and modest slit.", price: 179, image: "fiesta-largo.webp", colors: [palette.navy, palette.burgundy, palette.green], sizes: ["4", "6", "8", "10", "12", "14"], badge: { es: "Largos", en: "Long" } }),
+  makeProduct({ id: "vestido-fiesta-corto", category: "fiesta", subcategory: 1, es: "Vestido Corto de Satén", en: "Satin Cocktail Dress", descriptionEs: "Vestido negro a la rodilla con escote cuadrado, falda línea A y cinturón de cristal.", descriptionEn: "Knee-length black dress with a square neckline, A-line skirt and crystal belt.", price: 129, image: "fiesta-corto.webp", colors: [palette.black, palette.burgundy, palette.navy], sizes: ["2", "4", "6", "8", "10", "12"], badge: { es: "Cortos", en: "Short" } }),
+  makeProduct({ id: "vestido-fiesta-juvenil", category: "fiesta", subcategory: 2, es: "Vestido Juvenil Lavanda", en: "Lavender Youth Dress", descriptionEs: "Vestido de chifón con mangas fluidas, cintura ancha y falda de largo midi.", descriptionEn: "Chiffon dress with flutter sleeves, a wide waistband and midi-length skirt.", price: 149, image: "fiesta-juvenil.webp", colors: [palette.lavender, palette.blush, palette.sage], sizes: ["2", "4", "6", "8", "10", "12"], badge: { es: "Juveniles", en: "Youth" } }),
+  makeProduct({ id: "vestido-dama-rosa", category: "fiesta", subcategory: 3, es: "Vestido para Dama Rosa", en: "Dusty Rose Bridesmaid Gown", descriptionEs: "Vestido largo de chifón rosa con escote cruzado, manga corta y falda línea A.", descriptionEn: "Long dusty-rose chiffon gown with wrap bodice, cap sleeves and A-line skirt.", price: 165, image: "fiesta-damas.webp", colors: [palette.blush, palette.sage, palette.navy], sizes: ["4", "6", "8", "10", "12", "14", "16"], badge: { es: "Para damas", en: "Bridesmaids" } }),
+  makeProduct({ id: "vestido-evento-terciopelo", category: "fiesta", subcategory: 4, es: "Vestido Esmeralda de Terciopelo", en: "Emerald Velvet Evening Gown", descriptionEs: "Vestido de terciopelo con hombros descubiertos y silueta ajustada con caída elegante.", descriptionEn: "Off-shoulder velvet gown with a fitted silhouette and elegant flared hem.", price: 229, image: "fiesta-especial.webp", colors: [palette.green, palette.burgundy, palette.navy], sizes: ["4", "6", "8", "10", "12", "14"], badge: { es: "Eventos especiales", en: "Special events" } }),
+
+  makeProduct({ id: "vestido-novia-clasico", category: "novias", subcategory: 0, es: "Vestido de Novia Clásico", en: "Classic Satin Wedding Gown", descriptionEs: "Vestido de satén marfil en línea A con cuello barco, botones forrados y cola capilla.", descriptionEn: "Ivory satin A-line gown with bateau neckline, covered buttons and chapel train.", price: 899, image: "novia-clasico.webp", colors: [palette.ivory, palette.white], sizes: ["4", "6", "8", "10", "12", "14"], badge: { es: "Clásicos", en: "Classic" } }),
+  makeProduct({ id: "vestido-novia-moderno", category: "novias", subcategory: 1, es: "Vestido de Novia Moderno", en: "Modern Crepe Wedding Gown", descriptionEs: "Vestido minimalista de crepé con escote asimétrico y sobrefalda desmontable.", descriptionEn: "Minimal crepe gown with an asymmetric neckline and detachable overskirt.", price: 1099, image: "novia-moderno.webp", colors: [palette.ivory, palette.white], sizes: ["4", "6", "8", "10", "12"], badge: { es: "Modernos", en: "Modern" } }),
+  makeProduct({ id: "vestido-novia-princesa", category: "novias", subcategory: 2, es: "Vestido de Novia Princesa", en: "Princess Lace Wedding Gown", descriptionEs: "Corsé de encaje con tirantes caídos y amplia falda de tul con cola capilla.", descriptionEn: "Lace corset with off-shoulder straps and a full tulle skirt with chapel train.", price: 1299, image: "novia-princesa.webp", colors: [palette.ivory, palette.white], sizes: ["4", "6", "8", "10", "12"], badge: { es: "Princesa", en: "Princess" } }),
+  makeProduct({ id: "vestido-novia-sencillo", category: "novias", subcategory: 3, es: "Vestido de Novia Sencillo", en: "Simple A-Line Wedding Gown", descriptionEs: "Vestido limpio de crepé mate con escote V, cintura natural y cola corta.", descriptionEn: "Clean matte-crepe gown with V neckline, natural waist and short sweep train.", price: 749, image: "novia-sencillo.webp", colors: [palette.ivory, palette.white], sizes: ["4", "6", "8", "10", "12", "14"], badge: { es: "Sencillos", en: "Simple" } }),
+
+  makeProduct({ id: "vestido-nina-ceremonia", category: "nina", subcategory: 1, es: "Vestido de Ceremonia Marfil", en: "Ivory Ceremony Dress", descriptionEs: "Vestido infantil en satén marfil y tul con fajín rosa y flores de tela.", descriptionEn: "Ivory satin and tulle children's dress with blush sash and fabric flowers.", price: 95, image: "nina-ceremonia.webp", colors: [palette.ivory, palette.blush], sizes: ["2", "4", "6", "8", "10", "12"], badge: { es: "Ceremonia", en: "Ceremony" } }),
+  makeProduct({ id: "vestido-nina-presentacion", category: "nina", subcategory: 2, es: "Vestido Blanco de Presentación", en: "White Presentation Dress", descriptionEs: "Vestido blanco de satén y encaje con manga corta, falda larga y cinturón de perlas.", descriptionEn: "White satin and lace dress with short sleeves, long skirt and pearl belt.", price: 119, image: "nina-presentacion.webp", colors: [palette.white], sizes: ["4", "6", "8", "10", "12"], badge: { es: "Presentación", en: "Presentation" } }),
+  makeProduct({ id: "vestido-damita-salvia", category: "nina", subcategory: 3, es: "Vestido de Damita con Fajín Salvia", en: "Sage Sash Flower Girl Dress", descriptionEs: "Vestido marfil de encaje y tul con fajín removible color verde salvia.", descriptionEn: "Ivory lace and tulle flower-girl dress with removable sage satin sash.", price: 89, image: "nina-damita.webp", colors: [palette.sage, palette.blush, palette.ivory], sizes: ["2", "4", "6", "8", "10"], badge: { es: "Damitas", en: "Flower girls" } }),
+
+  makeProduct({ id: "ropon-bautizo-nina", category: "bautizo-ninos", subcategory: 0, es: "Ropón de Bautizo para Niña", en: "Girls Christening Gown", descriptionEs: "Ropón blanco de algodón satinado con bordado floral, encaje y gorro coordinado.", descriptionEn: "White cotton-satin christening gown with floral embroidery, lace and matching bonnet.", price: 149, image: "bautizo-nina.webp", colors: [palette.white, palette.ivory], sizes: ["0-3M", "3-6M", "6-9M", "9-12M"], badge: { es: "Ropones para niña", en: "Girls christening gowns" } }),
+  makeProduct({ id: "ropon-bautizo-nino", category: "bautizo-ninos", subcategory: 1, es: "Conjunto de Bautizo para Niño", en: "Boys Christening Romper", descriptionEs: "Mameluco blanco con chaleco bordado, moño, pantalón corto y gorra coordinada.", descriptionEn: "White romper with embroidered vest, bow tie, pleated shorts and matching cap.", price: 119, image: "bautizo-nino.webp", colors: [palette.white, palette.ivory], sizes: ["0-3M", "3-6M", "6-9M", "9-12M"], badge: { es: "Ropones para niño", en: "Boys christening outfits" } }),
+  makeProduct({ id: "conjunto-bautizo-completo", category: "bautizo-ninos", subcategory: 2, es: "Conjunto Completo de Bautizo", en: "Complete Baptism Set", descriptionEs: "Juego con mameluco, babero bordado, vela, zapatos y gorra en color blanco.", descriptionEn: "Coordinated white set with romper, embroidered bib, candle, shoes and cap.", price: 165, image: "bautizo-conjunto.webp", colors: [palette.white, palette.ivory], sizes: ["0-3M", "3-6M", "6-9M"], badge: { es: "Conjuntos de bautizo", en: "Baptism sets" } }),
+  makeProduct({ id: "traje-formal-nino", category: "bautizo-ninos", subcategory: 3, es: "Traje Formal Azul para Niño", en: "Boys Navy Formal Suit", descriptionEs: "Traje azul marino con saco, chaleco, pantalón, camisa blanca y moño rosa.", descriptionEn: "Navy suit with jacket, vest, trousers, white shirt and blush bow tie.", price: 189, image: "nino-traje.webp", colors: [palette.navy, palette.black], sizes: ["2", "4", "6", "8", "10", "12"], badge: { es: "Trajes formales", en: "Formal suits" } }),
+  makeProduct({ id: "vestido-primera-comunion", category: "bautizo-ninos", subcategory: 4, es: "Vestido de Primera Comunión", en: "First Communion Dress", descriptionEs: "Vestido blanco de encaje y tul con cintura satinada y velo corto coordinado.", descriptionEn: "White lace and tulle dress with satin waistband and matching short veil.", price: 175, image: "primera-comunion.webp", colors: [palette.white], sizes: ["6", "8", "10", "12", "14"], badge: { es: "Primera comunión", en: "First communion" } }),
+
+  makeProduct({ id: "ramo-xv-cristales", category: "ramos", subcategory: 0, es: "Ramo de XV Rosa con Cristales", en: "Blush Crystal Quince Bouquet", descriptionEs: "Ramo de rosas rosa y marfil con broches de cristal y mango forrado en satén.", descriptionEn: "Blush and ivory rose bouquet with crystal brooches and satin-wrapped handle.", price: 135, image: "ramo-xv.webp", colors: [palette.blush, palette.royal, palette.burgundy], badge: { es: "XV años", en: "Quince" } }),
+  makeProduct({ id: "ramo-damas-rosa", category: "ramos", subcategory: 2, es: "Ramo para Damas Rosa y Salvia", en: "Dusty Rose Bridesmaid Bouquet", descriptionEs: "Rosas rosa, mini rosas crema y eucalipto con mango de listón verde salvia.", descriptionEn: "Dusty roses, cream spray roses and eucalyptus with sage ribbon handle.", price: 85, image: "ramo-damas.webp", colors: [palette.blush, palette.sage], badge: { es: "Damas", en: "Bridesmaids" } }),
+  makeProduct({ id: "mini-ramo-romantico", category: "ramos", subcategory: 3, es: "Mini Ramo Romántico", en: "Romantic Mini Bouquet", descriptionEs: "Mini ramo de rosas crema y ranúnculos rosa con mango delgado de satén.", descriptionEn: "Mini bouquet of cream roses and blush ranunculus with a slim satin handle.", price: 55, image: "ramo-mini.webp", colors: [palette.blush, palette.ivory], badge: { es: "Mini ramos", en: "Mini bouquets" } }),
+  makeProduct({ id: "ramo-personalizado-azul", category: "ramos", subcategory: 4, es: "Ramo Personalizado Azul Real", en: "Royal Blue Personalized Bouquet", descriptionEs: "Ramo artesanal de rosas de satén azul y plata con cristales, perlas y medallón.", descriptionEn: "Handcrafted royal-blue and silver satin-rose bouquet with crystals, pearls and charm.", price: 145, image: "ramo-personalizado.webp", colors: [palette.royal, palette.burgundy, palette.blush], badge: { es: "Personalizados", en: "Personalized" } }),
+
+  makeProduct({ id: "corsage-novia-marfil", category: "corsages", subcategory: 0, es: "Corsage de Novia Marfil", en: "Ivory Bridal Corsage", descriptionEs: "Corsage de muñeca con mini rosas marfil, perlas, nube y listón de satén.", descriptionEn: "Wrist corsage with ivory spray roses, pearls, baby's breath and satin ribbon.", price: 55, image: "corsage-novia.webp", colors: [palette.ivory, palette.white], badge: { es: "Novia", en: "Bride" } }),
+  makeProduct({ id: "boutonniere-novio-marfil", category: "corsages", subcategory: 1, es: "Boutonnière de Novio", en: "Groom Ivory Boutonniere", descriptionEs: "Rosa marfil con eucalipto, nube y tallo forrado en satén azul marino.", descriptionEn: "Ivory rose with eucalyptus, baby's breath and navy satin stem wrap.", price: 35, image: "corsage-novio.webp", colors: [palette.navy, palette.black, palette.burgundy], badge: { es: "Novio", en: "Groom" } }),
+  makeProduct({ id: "corsage-dama-rosa", category: "corsages", subcategory: 2, es: "Corsage para Dama Rosa", en: "Dusty Rose Bridesmaid Corsage", descriptionEs: "Mini rosas rosa, eucalipto y nube sobre pulsera de listón satinado.", descriptionEn: "Dusty spray roses, eucalyptus and baby's breath on a satin ribbon wristlet.", price: 45, image: "corsage-damas.webp", colors: [palette.blush, palette.sage], badge: { es: "Damas", en: "Bridesmaids" } }),
+  makeProduct({ id: "corsage-padrinos-vino", category: "corsages", subcategory: 3, es: "Corsage para Padrinos Vino", en: "Burgundy Sponsor Corsage", descriptionEs: "Rosa vino con mini rosa marfil, hojas doradas y listón color champaña.", descriptionEn: "Burgundy rose with ivory spray rose, gold leaves and champagne ribbon.", price: 50, image: "corsage-padrinos.webp", colors: [palette.burgundy, palette.champagne], badge: { es: "Padrinos", en: "Sponsors" } }),
+  makeProduct({ id: "boutonniere-rosa-clasico", category: "corsages", subcategory: 4, es: "Boutonnière Rosa Clásico", en: "Classic Dusty Rose Boutonniere", descriptionEs: "Botón de rosa con eucalipto, nube y tallo forrado en satén marfil.", descriptionEn: "Dusty rosebud with eucalyptus, baby's breath and ivory satin stem wrap.", price: 30, image: "boutonniere.webp", colors: [palette.blush, palette.ivory], badge: { es: "Boutonnières", en: "Boutonnières" } }),
+  makeProduct({ id: "corsage-personalizado-azul", category: "corsages", subcategory: 5, es: "Corsage Personalizado Azul", en: "Royal Blue Personalized Corsage", descriptionEs: "Rosa de satén azul con cristales, perlas, listón ajustable y medallón para personalizar.", descriptionEn: "Royal-blue satin rose with crystals, pearls, adjustable ribbon and customizable charm.", price: 65, image: "corsage-personalizado.webp", colors: [palette.royal, palette.burgundy, palette.blush], badge: { es: "Personalizados", en: "Personalized" } }),
+
+  makeProduct({ id: "copas-xv-rosa", category: "brindis", subcategory: 0, es: "Copas de XV Rosa", en: "Blush Quince Toasting Flutes", descriptionEs: "Par de copas con encaje, listón rosa, broches de cristal y dijes de quince.", descriptionEn: "Pair of flutes with lace, blush ribbon, crystal brooches and quince charms.", price: 79, image: "copas-xv.webp", colors: [palette.blush, palette.royal, palette.burgundy], badge: { es: "Copas para XV", en: "Quince glasses" } }),
+  makeProduct({ id: "copas-novios-marfil", category: "brindis", subcategory: 1, es: "Copas para Novios Marfil", en: "Ivory Wedding Toasting Flutes", descriptionEs: "Dos copas decoradas en satén marfil, encaje floral y detalles de perlas.", descriptionEn: "Two flutes decorated with ivory satin, floral lace and pearl accents.", price: 89, image: "copas-novios.webp", colors: [palette.ivory, palette.white], badge: { es: "Copas para novios", en: "Wedding glasses" } }),
+  makeProduct({ id: "juego-seis-copas-azul", category: "brindis", subcategory: 2, es: "Juego de Seis Copas Azul", en: "Six-Piece Royal Blue Flute Set", descriptionEs: "Juego de seis copas coordinadas con listón azul real y broches color plata.", descriptionEn: "Coordinated set of six flutes with royal-blue ribbon and silver crystal brooches.", price: 180, image: "juego-copas.webp", colors: [palette.royal, palette.burgundy, palette.blush], badge: { es: "Juegos de copas", en: "Glass sets" } }),
+  makeProduct({ id: "jarra-brindis-rosa", category: "brindis", subcategory: 3, es: "Jarra Decorada con Dos Vasos", en: "Decorated Pitcher & Two Glasses", descriptionEs: "Jarra de vidrio con dos vasos, encaje marfil, listón rosa y cristales.", descriptionEn: "Glass pitcher with two matching glasses, ivory lace, blush ribbon and crystals.", price: 145, image: "jarra-decorada.webp", colors: [palette.blush, palette.royal, palette.burgundy], badge: { es: "Jarras decoradas", en: "Decorated pitchers" } }),
+  makeProduct({ id: "brindis-personalizado-azul", category: "brindis", subcategory: 4, es: "Juego de Brindis Personalizado", en: "Personalized Royal Blue Toast Set", descriptionEs: "Botella y dos copas decoradas en azul y plata con medallones para nombre y fecha.", descriptionEn: "Bottle and two flutes in royal blue and silver with name-and-date charms.", price: 225, image: "brindis-personalizado.webp", colors: [palette.royal, palette.burgundy, palette.blush], badge: { es: "Personalizados", en: "Personalized" } }),
+
+  makeProduct({ id: "promo-vestido-ciruela", category: "promociones", subcategory: 0, es: "Vestido Largo Ciruela en Oferta", en: "Plum Formal Gown Sale", descriptionEs: "Vestido largo de chifón con manga fluida y cintura bordada, precio especial de temporada.", descriptionEn: "Long chiffon gown with flutter sleeves and beaded waist at a seasonal special price.", price: 129, image: "promo-oferta.webp", colors: [palette.plum], sizes: ["6", "8", "10", "12"], badge: { es: "Oferta", en: "Sale" } }),
+  makeProduct({ id: "paquete-completo-xv", category: "promociones", subcategory: 1, es: "Paquete Completo de XV", en: "Complete Quinceañera Package", descriptionEs: "Paquete coordinado con corona, Biblia, rosario, cojín, libro, álbum, caja, ramo y copas.", descriptionEn: "Coordinated package with crown, Bible, rosary, pillow, guest book, album, box, bouquet and flutes.", price: 999, image: "paquete-xv.webp", colors: [palette.royal, palette.burgundy, palette.blush], badge: { es: "Paquetes de XV", en: "Quince packages" } }),
+  makeProduct({ id: "paquete-accesorios-boda", category: "promociones", subcategory: 2, es: "Paquete de Accesorios para Boda", en: "Wedding Accessory Package", descriptionEs: "Incluye velo, lazo ceremonial, cojín, libro, caja, copas y juego para pastel.", descriptionEn: "Includes veil, ceremonial lasso, ring pillow, guest book, card box, flutes and cake set.", price: 499, image: "paquete-boda.webp", colors: [palette.ivory, palette.white], badge: { es: "Paquetes de boda", en: "Wedding packages" } }),
+  makeProduct({ id: "paquete-completo-bautizo", category: "promociones", subcategory: 3, es: "Paquete Completo de Bautizo", en: "Complete Baptism Package", descriptionEs: "Conjunto con mameluco, babero, vela, zapatos, gorra, cobija y caja de recuerdo.", descriptionEn: "Set with romper, bib, candle, shoes, cap, blanket and keepsake box.", price: 249, image: "paquete-bautizo.webp", colors: [palette.white, palette.ivory], sizes: ["0-3M", "3-6M", "6-9M"], badge: { es: "Paquetes de bautizo", en: "Baptism packages" } }),
+  makeProduct({ id: "ultima-pieza-xv-champana", category: "promociones", subcategory: 4, es: "Última Pieza XV Champaña", en: "Last Piece Champagne Quince Gown", descriptionEs: "Última pieza de vestido champaña con corsé bordado y falda amplia de tul brillante.", descriptionEn: "Final champagne gown with embroidered corset and full glitter-tulle skirt.", price: 399, image: "promo-ultima-pieza.webp", colors: [palette.champagne], sizes: ["10"], badge: { es: "Última pieza", en: "Last piece" } }),
+  makeProduct({ id: "vestido-temporada-vino", category: "promociones", subcategory: 5, es: "Vestido de Temporada Vino", en: "Seasonal Burgundy Velvet Gown", descriptionEs: "Vestido de terciopelo vino con manga larga, escote cuadrado y cinturón de cristal.", descriptionEn: "Burgundy velvet gown with long sleeves, square neckline and crystal belt.", price: 199, image: "promo-temporada.webp", colors: [palette.burgundy, palette.green, palette.navy], sizes: ["4", "6", "8", "10", "12"], badge: { es: "Temporada", en: "Seasonal" } }),
+]
+
 export const products = [
   {
     id: "vestido-xv-princesa",
     category: "xv",
+    subcategory: "1",
     name: { es: "Vestido de XV Princesa", en: "Princess Quince Gown" },
     description: {
       es: "Corte princesa con pedrería, corsé estructurado y tul en capas. Una silueta luminosa creada para hacer una entrada inolvidable.",
@@ -85,6 +168,7 @@ export const products = [
   {
     id: "vestido-novia-encaje",
     category: "novias",
+    subcategory: "4",
     name: { es: "Vestido de Novia Encaje", en: "Lace Wedding Gown" },
     description: {
       es: "Encaje floral, escote romántico y cola larga desmontable. Elegancia clásica con una caída ligera y favorecedora.",
@@ -100,6 +184,7 @@ export const products = [
   {
     id: "vestido-nina-rosa",
     category: "nina",
+    subcategory: "0",
     name: { es: "Vestido de Niña Rosa", en: "Pink Girl Dress" },
     description: {
       es: "Vestido de fiesta en tul rosa con falda de volumen suave y detalles florales.",
@@ -114,6 +199,7 @@ export const products = [
   {
     id: "ramo-novia-romantico",
     category: "ramos",
+    subcategory: "1",
     name: { es: "Ramo de Novia Romántico", en: "Romantic Bridal Bouquet" },
     description: {
       es: "Composición floral en tonos blush y crema, terminada con cinta satinada.",
@@ -126,33 +212,125 @@ export const products = [
     featured: false,
   },
   {
-    id: "corona-rose-gold",
+    id: "tiara-real-cristal",
     category: "accesorios",
-    name: { es: "Corona Rose Gold", en: "Rose Gold Crown" },
+    subcategory: "0",
+    name: { es: "Tiara Real de Cristal", en: "Royal Crystal Tiara" },
     description: {
-      es: "Corona de acabado rose gold con cristales luminosos y ajuste cómodo.",
-      en: "Rose gold finish crown with luminous crystals and a comfortable fit.",
+      es: "Tiara de metal plateado decorada con cristales transparentes y pedrería. Sus peinetas laterales ayudan a mantenerla segura durante la ceremonia y la recepción.",
+      en: "Silver-tone metal tiara decorated with clear crystals and sparkling stones. Side combs help keep it secure throughout the ceremony and reception.",
     },
-    price: 45,
-    images: ["productos/corona.webp", "productos/corona.jpg"],
+    price: 99,
+    images: ["productos/tiara-cristal.webp"],
     sizes: [],
-    colors: [{ name: { es: "Rose gold", en: "Rose gold" }, value: "rose-gold", hex: "#b76e79" }],
-    featured: false,
+    colors: [
+      { name: { es: "Plata", en: "Silver" }, value: "plata", hex: "#c7c7c7" },
+      { name: { es: "Dorado", en: "Gold" }, value: "dorado", hex: "#c6a15b" },
+      { name: { es: "Oro rosa", en: "Rose gold" }, value: "oro-rosa", hex: "#b76e79" },
+    ],
+    featured: true,
+    badge: { es: "Coronas y tiaras", en: "Crowns & tiaras" },
   },
   {
-    id: "oso-peluche-xv",
+    id: "velo-lazo-ceremonial",
     category: "accesorios",
-    name: { es: "Oso de Peluche XV", en: "Quince Teddy Bear" },
+    subcategory: "1",
+    name: { es: "Juego de Velo y Lazo Ceremonial", en: "Ceremonial Veil & Lasso Set" },
     description: {
-      es: "Oso con vestido de XV coordinado, perfecto para regalo o decoración.",
-      en: "Teddy bear with a coordinated quince dress, perfect as a gift or decoration.",
+      es: "Juego para ceremonia de boda con velo de tul marfil, borde de encaje y peine satinado, acompañado por un lazo de cuentas aperladas con detalles de cristal.",
+      en: "Wedding ceremony set with an ivory tulle veil, lace edging and satin-wrapped comb, paired with a pearl-beaded lasso accented with clear crystals.",
     },
-    price: 60,
-    images: ["productos/oso.webp", "productos/oso.jpg"],
+    price: 189,
+    images: ["productos/velo-lazo.webp"],
     sizes: [],
-    colors: [{ name: { es: "Rosa", en: "Pink" }, value: "rosa", hex: "#d98ba9" }],
+    colors: [
+      { name: { es: "Marfil", en: "Ivory" }, value: "marfil", hex: "#f7f2e8" },
+      { name: { es: "Blanco", en: "White" }, value: "blanco", hex: "#ffffff" },
+    ],
     featured: false,
+    badge: { es: "Velos y lazos", en: "Veils & lassos" },
   },
+  {
+    id: "juego-cojines-ceremonia",
+    category: "accesorios",
+    subcategory: "2",
+    name: { es: "Juego de Cojines para Ceremonia", en: "Ceremony Pillow Set" },
+    description: {
+      es: "Juego elaborado en satén marfil con encaje floral, listón y cristales. Incluye un cojín grande para arrodillarse y uno pequeño para presentar la corona, el anillo o las zapatillas.",
+      en: "Ivory satin set finished with floral lace, ribbon and crystals. Includes a large kneeling pillow and a small pillow for presenting a crown, ring or shoes.",
+    },
+    price: 110,
+    images: ["productos/cojines-ceremonia.webp"],
+    sizes: [],
+    colors: [
+      { name: { es: "Rosa y marfil", en: "Blush & ivory" }, value: "rosa-marfil", hex: "#e8b7bd" },
+      { name: { es: "Azul real y plata", en: "Royal blue & silver" }, value: "azul-plata", hex: "#284a9b" },
+      { name: { es: "Rojo y dorado", en: "Red & gold" }, value: "rojo-dorado", hex: "#8f1f2d" },
+    ],
+    featured: false,
+    badge: { es: "Cojines", en: "Pillows" },
+  },
+  {
+    id: "vela-ceremonial-personalizada",
+    category: "accesorios",
+    subcategory: "3",
+    name: { es: "Vela Ceremonial Personalizada", en: "Personalized Ceremony Candle" },
+    description: {
+      es: "Vela ceremonial blanca de 18 pulgadas decorada con encaje, listón de satén, flores y cristales. El color, nombre y fecha pueden coordinarse con el evento.",
+      en: "Eighteen-inch white ceremony candle decorated with lace, satin ribbon, flowers and crystals. Color, name and date can be coordinated with the event.",
+    },
+    price: 85,
+    images: ["productos/vela-ceremonial.webp"],
+    sizes: [],
+    colors: [
+      { name: { es: "Rosa", en: "Blush" }, value: "rosa", hex: "#e8b7bd" },
+      { name: { es: "Lavanda", en: "Lavender" }, value: "lavanda", hex: "#b9a4cf" },
+      { name: { es: "Azul real", en: "Royal blue" }, value: "azul-real", hex: "#284a9b" },
+    ],
+    featured: false,
+    badge: { es: "Velas", en: "Candles" },
+  },
+  {
+    id: "biblia-rosario-personalizado",
+    category: "accesorios",
+    subcategory: "4",
+    name: { es: "Juego de Biblia y Rosario", en: "Bible & Rosary Set" },
+    description: {
+      es: "Biblia de bolsillo forrada en satén marfil con encaje, listón y pedrería, acompañada por un rosario de cuentas aperladas y bolsa de organza. Disponible en español o inglés.",
+      en: "Pocket Bible wrapped in ivory satin with lace, ribbon and crystal details, paired with a pearl-beaded rosary and organza pouch. Available in Spanish or English.",
+    },
+    price: 125,
+    images: ["productos/biblia-rosario.webp"],
+    sizes: [],
+    colors: [
+      { name: { es: "Rosa y marfil", en: "Blush & ivory" }, value: "rosa-marfil", hex: "#e8b7bd" },
+      { name: { es: "Blanco y dorado", en: "White & gold" }, value: "blanco-dorado", hex: "#d7bd7a" },
+      { name: { es: "Azul real y plata", en: "Royal blue & silver" }, value: "azul-plata", hex: "#284a9b" },
+    ],
+    featured: false,
+    badge: { es: "Biblias y rosarios", en: "Bibles & rosaries" },
+  },
+  {
+    id: "libro-album-caja-xv",
+    category: "accesorios",
+    subcategory: "5",
+    name: { es: "Juego de Libro, Álbum y Caja", en: "Guest Book, Album & Card Box Set" },
+    description: {
+      es: "Juego coordinado con libro de firmas, pluma decorada, álbum de fotografías y caja para sobres. Elaborado en satén marfil con encaje, listones, flores y cristales.",
+      en: "Coordinated set with guest book, decorated pen, photo album and card box. Finished in ivory satin with lace, ribbons, flowers and crystals.",
+    },
+    price: 290,
+    images: ["productos/libros-caja.webp"],
+    sizes: [],
+    colors: [
+      { name: { es: "Rosa y marfil", en: "Blush & ivory" }, value: "rosa-marfil", hex: "#e8b7bd" },
+      { name: { es: "Champaña y dorado", en: "Champagne & gold" }, value: "champana-dorado", hex: "#d7bd7a" },
+      { name: { es: "Vino y dorado", en: "Burgundy & gold" }, value: "vino-dorado", hex: "#722f45" },
+    ],
+    featured: false,
+    badge: { es: "Libros, álbumes y cajas", en: "Books, albums & boxes" },
+  },
+  ...expandedProducts,
 ]
 
 export const getCategory = (slug) => categories.find((category) => category.slug === slug)
