@@ -8,26 +8,26 @@ import { useEffect, useRef, useState } from "react";
 const PRODUCTOS = [
   { id: 1, cat: "Vestidos de XV", cat_en: "Quinceañera",
     nombre: "Vestido de XV Princesa", nombre_en: "Princess Quince Gown",
-    precio: 499, img: "/productos/vestido-xv.jpg", destacado: true,
+    precio: 499, img: "productos/vestido-xv.jpg", destacado: true,
     desc: "Corte princesa con pedrería y tul en capas.",
     desc_en: "Princess cut with beading and layered tulle." },
   { id: 2, cat: "Novias", cat_en: "Bridal",
     nombre: "Vestido de Novia Encaje", nombre_en: "Lace Wedding Gown",
-    precio: 699, img: "/productos/vestido-novia.jpg", destacado: true,
+    precio: 699, img: "productos/vestido-novia.jpg", destacado: true,
     desc: "Encaje francés y cola larga desmontable.",
     desc_en: "French lace with detachable long train." },
   { id: 3, cat: "Niña", cat_en: "Girls",
     nombre: "Vestido de Niña Rosa", nombre_en: "Pink Girl Dress",
-    precio: 89, img: "/productos/vestido-nina.jpg" },
+    precio: 89, img: "productos/vestido-nina.jpg" },
   { id: 4, cat: "Ramos", cat_en: "Bouquets",
     nombre: "Ramo de Novia", nombre_en: "Bridal Bouquet",
-    precio: 75, img: "/productos/ramo.jpg" },
+    precio: 75, img: "productos/ramo.jpg" },
   { id: 5, cat: "Accesorios", cat_en: "Accessories",
     nombre: "Corona Rose Gold", nombre_en: "Rose Gold Crown",
-    precio: 45, img: "/productos/corona.jpg" },
+    precio: 45, img: "productos/corona.jpg" },
   { id: 6, cat: "Accesorios", cat_en: "Accessories",
     nombre: "Oso de Peluche XV", nombre_en: "Quince Teddy Bear",
-    precio: 60, img: "/productos/oso.jpg" },
+    precio: 60, img: "productos/oso.jpg" },
 ];
 
 const CATEGORIAS = [
@@ -245,7 +245,7 @@ export default function App() {
       <header className="sticky top-0 z-40 bg-negro border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-20">
           <a href="#" className="flex items-center">
-            <img src="/logo-letrero.png" alt="Valerie's Boutique" className="h-16 w-auto" />
+            <img src="logo-letrero.png" alt="Valerie's Boutique" className="h-16 w-auto" />
           </a>
 
           <nav className="hidden lg:flex gap-7 text-white/90 text-sm tracking-wide">
@@ -294,40 +294,40 @@ export default function App() {
 
         {/* Capa lejana: rama con botones (se mueve poco, casi quieta) */}
         <CapaFlor
-          src="/flores/rama-botones.png"
+          src="flores/rama-botones.png"
           clase="top-[4%] left-[-4%] w-[55vw] md:w-[38vw] max-w-[520px]"
           prof={6} escala={1.35} retraso="0.25s" blur="2px" opacidad={0.55}
         />
 
         {/* Ramo esquina superior derecha (capa media) */}
         <CapaFlor
-          src="/flores/ramo-derecha.png"
+          src="flores/ramo-derecha.png"
           clase="top-[-10%] right-[-14%] w-[64vw] md:w-[38vw] max-w-[560px]"
           prof={14} escala={1.5} retraso="0.1s" opacidad={0.92}
         />
 
         {/* Ramo esquina inferior izquierda (capa cercana) */}
         <CapaFlor
-          src="/flores/ramo-izquierda.png"
+          src="flores/ramo-izquierda.png"
           clase="bottom-[-14%] left-[-12%] w-[72vw] md:w-[46vw] max-w-[640px]"
           prof={20} escala={1.6} retraso="0s"
         />
 
         {/* Petalos flotando en medio */}
         <CapaFlor
-          src="/flores/petalos.png"
+          src="flores/petalos.png"
           clase="top-[8%] left-[16%] w-[42vw] md:w-[28vw] max-w-[380px]"
           prof={26} escala={1.7} retraso="0.55s" opacidad={0.5} petalos
         />
         <CapaFlor
-          src="/flores/petalos.png"
+          src="flores/petalos.png"
           clase="top-[34%] right-[10%] w-[32vw] md:w-[20vw] max-w-[280px]"
           prof={32} escala={1.8} retraso="0.75s" blur="3px" opacidad={0.3} petalos
         />
 
         {/* Rosa gigante al frente, desenfocada (profundidad de campo) */}
         <CapaFlor
-          src="/flores/rosa-grande.png"
+          src="flores/rosa-grande.png"
           clase="bottom-[-16%] right-[-8%] w-[52vw] md:w-[32vw] max-w-[440px] hidden sm:block"
           prof={38} escala={2.1} retraso="0.2s" blur="7px" opacidad={0.9}
         />
@@ -455,7 +455,7 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-12 items-center">
           <div className="relative">
             <img
-              src="/flores/ramo-izquierda.png"
+              src="flores/ramo-izquierda.png"
               alt=""
               className="w-full max-w-sm mx-auto drop-shadow-[0_10px_40px_rgba(217,139,169,0.25)]"
             />
@@ -480,12 +480,12 @@ export default function App() {
         <div className="relative overflow-hidden bg-gradient-to-br from-rosadorado to-negro rounded-3xl px-8 py-16 text-center text-white">
           {/* Decoracion floral distinta a la del hero */}
           <img
-            src="/flores/rama-botones.png"
+            src="flores/rama-botones.png"
             alt=""
             className="absolute -top-12 -right-10 w-56 opacity-40 pointer-events-none"
           />
           <img
-            src="/flores/petalos.png"
+            src="flores/petalos.png"
             alt=""
             className="absolute bottom-2 -left-6 w-48 opacity-30 pointer-events-none"
           />
@@ -524,7 +524,7 @@ export default function App() {
       <footer className="bg-negro text-white/80">
         <div className="max-w-7xl mx-auto px-4 py-14 grid sm:grid-cols-3 gap-10">
           <div>
-            <img src="/logo-letrero.png" alt="Valerie's Boutique" className="h-24 w-auto mb-3" />
+            <img src="logo-letrero.png" alt="Valerie's Boutique" className="h-24 w-auto mb-3" />
             <p className="text-sm text-white/60">{t.pagoSeguro}</p>
           </div>
           <div>
