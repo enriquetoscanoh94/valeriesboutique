@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+/* Colores y fuentes de la marca Valerie's Boutique */
+@theme {
+  --color-rosa: #d98ba9;        /* rosa principal (del logo) */
+  --color-rosa-claro: #f6e3ec;  /* rosa suave para fondos */
+  --color-rosadorado: #b76e79;  /* rose gold, acento */
+  --color-negro: #141414;       /* negro elegante */
+  --color-crema: #fdfbfa;       /* blanco/crema de fondo */
+
+  --font-display: "Cormorant Garamond", serif;  /* titulos elegantes */
+  --font-sans: "Poppins", system-ui, sans-serif; /* texto */
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-crema);
+  color: var(--color-negro);
+}
+
+/* ==========================================================
+   HERO — Profundidad de flores
+   Cada capa de flores entra con zoom + desenfoque (como si la
+   camara saliera de entre las flores) y luego flota suavemente.
+   El parallax con el mouse se controla con las variables
+   --mx / --my que pone React en el contenedor del hero.
+   ========================================================== */
+
+/* Resplandor rosa muy sutil detras de todo */
+.hero-resplandor {
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 45%, rgba(217, 139, 169, 0.16), transparent 70%),
+    radial-gradient(ellipse 40% 35% at 80% 90%, rgba(183, 110, 121, 0.12), transparent 70%);
+}
+
+/* Velo oscuro detras del texto para que las letras blancas
+   no se pierdan sobre las flores claras. Oscurece el centro y
+   se desvanece a las orillas, sin tapar las flores. */
+.hero-scrim {
+  background: radial-gradient(
+    ellipse 62% 55% at 50% 50%,
+    rgba(20, 20, 20, 0.78),
+    rgba(20, 20, 20, 0.45) 45%,
+    transparent 78%
+  );
+}
+
+/* Capa exterior: solo se encarga del parallax con el mouse.
+   --prof = profundidad (mas alto = se mueve mas = mas cerca) */
+.capa {
+  transform: translate3d(
+    calc(var(--mx, 0) * var(--prof, 0) * 1px),
+    calc(var(--my, 0) * var(--prof, 0) * 0.6px),
+    0
+  );
+  will-change: transform;
+}
+
+/* Imagen interior: animacion de entrada + flotado infinito */
+.capa-img {
+  opacity: 0;
+  animation:
+    capa-entra 2.2s cubic-bezier(0.16, 1, 0.3, 1) var(--retraso, 0s) forwards,
+    capa-flota 14s ease-in-out calc(var(--retraso, 0s) + 2.4s) infinite alternate;
+}
+
+@keyframes capa-entra {
+  from {
+    opacity: 0;
+    transform: scale(var(--escala, 1.8));
+    filter: blur(26px);
+  }
+  to {
+    opacity: var(--opacidad, 1);
+    transform: scale(1);
+    filter: blur(var(--blur, 0px));
+  }
+}
+
+@keyframes capa-flota {
+  from { transform: scale(1) translateY(0); }
+  to   { transform: scale(1.04) translateY(-14px); }
+}
+
+/* Petalos que caen lentamente en bucle */
+.petalos-caen {
+  animation:
+    capa-entra 2.4s cubic-bezier(0.16, 1, 0.3, 1) var(--retraso, 0.5s) forwards,
+    petalos-deriva 22s ease-in-out calc(var(--retraso, 0.5s) + 2.5s) infinite alternate;
+}
+
+@keyframes petalos-deriva {
+  from { transform: translateY(-3%) rotate(0deg); }
+  to   { transform: translateY(5%) rotate(6deg); }
+}
+
+/* Revelado de texto con mascara: el texto sube desde abajo
+   dentro de un contenedor con overflow hidden */
+.mascara { overflow: hidden; }
+.mascara > * {
+  display: block;
+  transform: translateY(115%);
+  animation: texto-sube 1.1s cubic-bezier(0.16, 1, 0.3, 1) var(--retraso, 0.9s) forwards;
+}
+
+@keyframes texto-sube {
+  to { transform: translateY(0); }
+}
+
+/* Aparicion suave (para botones y detalles al final) */
+.aparece {
+  opacity: 0;
+  animation: aparece-sube 1s cubic-bezier(0.16, 1, 0.3, 1) var(--retraso, 1.4s) forwards;
+}
+
+@keyframes aparece-sube {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Linea que invita a bajar (scroll) */
+.linea-scroll {
+  background: linear-gradient(to bottom, transparent, var(--color-rosa), transparent);
+  animation: linea-baja 2.2s ease-in-out 3s infinite;
+  opacity: 0;
+}
+
+@keyframes linea-baja {
+  0%   { opacity: 0; transform: translateY(-8px); }
+  40%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(10px); }
+}
+
+/* ==========================================================
+   Accesibilidad: si la persona prefiere menos movimiento,
+   todo aparece en su estado final sin animaciones
+   ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .capa-img,
+  .petalos-caen {
+    animation: none;
+    opacity: var(--opacidad, 1);
+    filter: blur(var(--blur, 0px));
+  }
+  .mascara > * { animation: none; transform: none; }
+  .aparece { animation: none; opacity: 1; }
+  .linea-scroll { animation: none; opacity: 0.6; }
+  .capa { transform: none; }
+}
