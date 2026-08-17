@@ -82,10 +82,33 @@ Stack del sitio: **React + Vite + Tailwind v4 + React Router**.
 
 ---
 
+## ✅ Migración a Vercel (COMPLETA)
+
+El sitio ya **no vive en GitHub Pages**, ahora está en **Vercel**:
+
+- 🌐 **Producción:** https://valeriesboutique.vercel.app (URL limpia, en la raíz)
+- **Hosting** en la cuenta de Vercel de la **clienta**, conectado al **GitHub del desarrollador** (repo `valeriesboutique`).
+- **Deploy automático:** cada `git push` a `main` publica solo.
+- **Config limpia:** llaves de Firebase en variables de entorno (`.env` local protegido + panel de Vercel), `vercel.json` con ruteo SPA y **cabeceras de seguridad** (HSTS, anti-clickjacking, etc.).
+- Se quitó el deploy roto de GitHub Pages.
+- El dominio `valeriesboutique.vercel.app` se autorizó en Firebase para que el login siga funcionando.
+
+**Firebase no cambió:** login, base de datos y fotos siguen igual. Solo cambió dónde vive el sitio.
+
+## 🟡 Fase 4 — Pagos con Stripe (EN PROGRESO)
+
+- **Código listo:** `api/checkout.js` crea la sesión de pago de Stripe (precios verificados en el servidor), el botón "Pagar" del checkout redirige a Stripe, y hay página **`/pago-exitoso`**.
+- **Modo prueba:** la cuenta de Stripe está en modo test; se usa la llave secreta de prueba (`STRIPE_SECRET_KEY` en Vercel). Se prueba con la tarjeta `4242 4242 4242 4242`.
+- **Los pedidos pagados** se ven, por ahora, en el **panel de Stripe** (con correo, monto y datos del cliente).
+- **Dormido para después:** `api/stripe-webhook.js` + `api/_firebaseAdmin.js` (guardar pedidos en Firestore). Se activa cuando se genere la cuenta de servicio de Firebase y se registre el webhook.
+- **Para salir en vivo (cobro real):** activar la cuenta de Stripe (datos del negocio + banco) y cambiar a las llaves reales.
+
 ## 🔜 Lo que sigue
 
-- **Fase 4 — Pagos con Stripe:** Cloud Functions + Stripe Checkout (tarjeta y pagos a plazos).
-- **Mejora futura:** poder editar/borrar también los 52 productos de muestra desde el panel.
+- **Probar el pago** con tarjeta de prueba en producción.
+- **Comprar el dominio propio** (ej. valeriesboutique.com) y conectarlo en Vercel + Firebase.
+- **Activar webhook + pedidos en Firestore** (cuenta de servicio de Firebase).
+- **Mejora futura:** editar/borrar también los 52 productos de muestra desde el panel.
 - **Pendiente por confirmar:** paquetería de envío (¿USPS o UPS?).
 
 ---

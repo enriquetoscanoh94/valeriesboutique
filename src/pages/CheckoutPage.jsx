@@ -13,13 +13,13 @@ const EMPTY_FORM = {
 }
 
 export default function CheckoutPage() {
-  const { items, clearCart } = useCart()
+  const { items } = useCart()
   const { localize, t } = useLanguage()
   const { getProduct } = useProducts()
 
   const [form, setForm] = useState(EMPTY_FORM)
   const [error, setError] = useState("")
-  const [placedOrder, setPlacedOrder] = useState(null)
+  const [processing, setProcessing] = useState(false)
 
   // Une cada item del carrito con su producto real del catalogo
   const lines = items
@@ -30,7 +30,7 @@ export default function CheckoutPage() {
   const colorName = (product, value) => localize(product.colors.find((color) => color.value === value)?.name)
   const setField = (event) => setForm({ ...form, [event.target.name]: event.target.value })
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     // Campos obligatorios: nombre y telefono siempre; si es envio, tambien la direccion
     const requiredOk = form.name.trim() && form.phone.trim() &&
@@ -40,56 +40,29 @@ export default function CheckoutPage() {
       return
     }
 
-    // Arma el pedido (snapshot para la confirmacion) y lo guarda localmente.
-    // Aun NO hay cobro: cuando entre Stripe, aqui se hara el redirect al pago.
-    const order = {
-      reference: `VB-${Date.now().toString().slice(-6)}`,
-      customer: form,
-      lines: lines.map((item) => ({
-        name: localize(item.product.name),
-        quantity: item.quantity,
-        price: item.product.price,
-        image: item.product.images[0],
-      })),
-      subtotal,
-      date: new Date().toISOString(),
-    }
-    localStorage.setItem("valeries-last-order", JSON.stringify(order))
-    clearCart()
-    setPlacedOrder(order)
+    // Pide al servidor una sesion de pago de Stripe y redirige a la pagina de pago.
     setError("")
-    window.scrollTo(0, 0)
-  }
-
-  // 1) Confirmacion (despues de enviar el pedido)
-  if (placedOrder) {
-    return (
-      <div className="checkout-page section">
-        <div className="checkout-success">
-          <div className="success-mark">
-            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#b76e79" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
-          </div>
-          <p className="eyebrow">Valerie&apos;s Boutique</p>
-          <h1>{t.checkout.successTitle}</h1>
-          <p className="success-text">{t.checkout.successText}</p>
-
-          <div className="order-recap">
-            <h2>{t.checkout.summary}</h2>
-            <ul>
-              {placedOrder.lines.map((line, index) => (
-                <li key={index}><span>{line.name} × {line.quantity}</span><span>${(line.price * line.quantity).toFixed(2)}</span></li>
-              ))}
-            </ul>
-            <div className="order-recap-row recap-total"><span>{t.checkout.subtotal}</span><span>${placedOrder.subtotal.toFixed(2)}</span></div>
-            <p className="recap-meta">{t.checkout.reference}: {placedOrder.reference}</p>
-            <p className="recap-meta">{t.checkout.deliveryLabel}: {placedOrder.customer.method === "pickup" ? t.checkout.methodPickup : t.checkout.methodShipping}</p>
-            <p className="recap-meta">{t.checkout.payNote}</p>
-          </div>
-
-          <Link className="button button-dark" to="/">{t.checkout.backHome}</Link>
-        </div>
-      </div>
-    )
+    setProcessing(true)
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((item) => ({ productId: item.productId, quantity: item.quantity })),
+          customer: form,
+        }),
+      })
+      const data = await response.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        setError(data.error || t.checkout.required)
+        setProcessing(false)
+      }
+    } catch {
+      setError(t.checkout.payError)
+      setProcessing(false)
+    }
   }
 
   // 2) Carrito vacio
@@ -159,7 +132,7 @@ export default function CheckoutPage() {
           </fieldset>
 
           {error && <p className="form-error">{error}</p>}
-          <button className="button button-dark" type="submit">{t.checkout.place}</button>
+          <button className="button button-dark" type="submit" disabled={processing}>{processing ? t.checkout.redirecting : t.checkout.place}</button>
         </form>
 
         <aside className="cart-summary checkout-summary">

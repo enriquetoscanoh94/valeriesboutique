@@ -11,6 +11,7 @@ import CategoryPage from "./pages/CategoryPage"
 import CheckoutPage from "./pages/CheckoutPage"
 import HomePage from "./pages/HomePage"
 import NotFoundPage from "./pages/NotFoundPage"
+import PagoExitosoPage from "./pages/PagoExitosoPage"
 import ProductPage from "./pages/ProductPage"
 import PoliciesPage from "./pages/PoliciesPage"
 
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "producto/:id", element: <ProductPage /> },
       { path: "carrito", element: <CartPage /> },
       { path: "checkout", element: <CheckoutPage /> },
+      { path: "pago-exitoso", element: <PagoExitosoPage /> },
       { path: "cuenta", element: <AccountPage /> },
       { path: "admin", element: <AdminPage /> },
       { path: "visita-citas", element: <PoliciesPage /> },
