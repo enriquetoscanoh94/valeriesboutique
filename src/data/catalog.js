@@ -66,7 +66,7 @@ export const categories = [
   },
 ]
 
-const palette = {
+export const palette = {
   blush: { name: { es: "Rosa", en: "Blush" }, value: "rosa", hex: "#d99aaa" },
   ivory: { name: { es: "Marfil", en: "Ivory" }, value: "marfil", hex: "#f5efe4" },
   white: { name: { es: "Blanco", en: "White" }, value: "blanco", hex: "#ffffff" },
@@ -336,3 +336,8 @@ export const products = [
 export const getCategory = (slug) => categories.find((category) => category.slug === slug)
 export const getProduct = (id) => products.find((product) => product.id === id)
 export const getProductsByCategory = (slug) => products.filter((product) => product.category === slug)
+
+// Devuelve la ruta correcta de una imagen:
+// - productos del catalogo base -> ruta local (con el prefijo del sitio)
+// - productos subidos por la admin -> URL completa de Firebase Storage (empieza con http)
+export const imageUrl = (path) => path?.startsWith("http") ? path : `${import.meta.env.BASE_URL}${path || ""}`

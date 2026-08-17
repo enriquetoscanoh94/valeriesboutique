@@ -1,0 +1,19 @@
+rules_version = '2';
+
+// Reglas de seguridad del almacen de fotos de Valerie's Boutique.
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // La duena es admin: se reconoce por su correo.
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'valeriesboutiqueadmin@gmail.com';
+    }
+
+    // Fotos de productos: cualquiera las ve; solo la admin las sube/borra.
+    match /products/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

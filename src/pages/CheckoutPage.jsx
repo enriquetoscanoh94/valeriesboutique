@@ -2,7 +2,8 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 import { useLanguage } from "../context/LanguageContext"
-import { getProduct } from "../data/catalog"
+import { useProducts } from "../context/ProductsContext"
+import { imageUrl } from "../data/catalog"
 
 const EMPTY_FORM = {
   name: "", email: "", phone: "",
@@ -14,6 +15,7 @@ const EMPTY_FORM = {
 export default function CheckoutPage() {
   const { items, clearCart } = useCart()
   const { localize, t } = useLanguage()
+  const { getProduct } = useProducts()
 
   const [form, setForm] = useState(EMPTY_FORM)
   const [error, setError] = useState("")
@@ -165,7 +167,7 @@ export default function CheckoutPage() {
           <ul className="checkout-summary-lines">
             {lines.map((item) => (
               <li key={item.key}>
-                <img src={`${import.meta.env.BASE_URL}${item.product.images[0]}`} alt={localize(item.product.name)} />
+                <img src={imageUrl(item.product.images[0])} alt={localize(item.product.name)} />
                 <span className="summary-line-name">{localize(item.product.name)}<small>
                   {item.size && `${t.cart.size}: ${item.size}`}{item.size && item.color && " · "}{item.color && `${t.cart.color}: ${colorName(item.product, item.color)}`}{" · × "}{item.quantity}
                 </small></span>

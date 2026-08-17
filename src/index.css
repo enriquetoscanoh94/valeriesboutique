@@ -268,6 +268,61 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .order-recap .recap-total { padding-top: 12px; border-top: 1px solid #dfcbd2; font-size: 15px; font-weight: 500; }
 .order-recap .recap-meta { margin: 10px 0 0; color: #7e7175; font-size: 12px; }
 
+/* ---------- Cuenta / Login ---------- */
+.account-page { min-height: 70vh; display: grid; place-items: center; }
+.account-card { width: 100%; max-width: 430px; padding: 40px; border: 1px solid #eadbe1; border-radius: 22px; background: #fff; box-shadow: 0 24px 60px rgba(169,95,108,.08); }
+.account-heading { text-align: center; margin-bottom: 26px; }
+.account-heading h1 { margin: 6px 0 8px; font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 500; }
+.account-subtitle { color: #766b6f; font-size: 14px; line-height: 1.6; }
+.account-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 22px; padding: 4px; border-radius: 999px; background: #fbf0f4; }
+.account-tabs button { border: 0; padding: 10px; border-radius: 999px; background: transparent; color: #8d7f83; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer; transition: background .2s, color .2s; }
+.account-tabs button.is-active { background: #fff; color: #141414; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.google-button { width: 100%; min-height: 48px; display: flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid #d9ccd1; border-radius: 999px; background: #fff; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; transition: border-color .2s, background .2s; }
+.google-button:hover { border-color: #b76e79; background: #fbf0f4; }
+.google-button:disabled { opacity: .6; cursor: default; }
+.account-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: #a99aa0; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.account-divider::before, .account-divider::after { content: ""; flex: 1; height: 1px; background: #eadbe1; }
+.account-form { display: grid; gap: 16px; }
+.account-form .button { margin-top: 6px; }
+.account-form .button:disabled { opacity: .6; cursor: default; }
+.account-switch { margin: 22px 0 0; text-align: center; color: #766b6f; font-size: 13px; }
+.account-switch button { border: 0; background: transparent; color: #a95f6c; font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; }
+.account-signed { text-align: center; }
+.account-signed h1 { margin: 6px 0 10px; font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 500; }
+.account-badge { display: inline-block; margin-bottom: 10px; padding: 5px 14px; border-radius: 999px; background: #141414; color: #fff; font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; }
+.account-email { color: #766b6f; font-size: 14px; margin: 0 0 24px; }
+.account-admin-link { width: 100%; margin-bottom: 12px; }
+.account-logout { border: 0; background: transparent; color: #a95f6c; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: underline; }
+.account-logout:disabled { opacity: .6; cursor: default; }
+.account-loading { color: #766b6f; }
+
+/* ---------- Panel admin ---------- */
+.admin-heading { margin-bottom: 30px; }
+.admin-heading h1 { margin: 6px 0 8px; font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 500; }
+.admin-sub { color: #766b6f; }
+.admin-layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: 44px; align-items: start; }
+.admin-form { display: grid; gap: 16px; padding: 30px; border: 1px solid #eadbe1; border-radius: 20px; background: #fff; }
+.admin-form h2 { margin: 0; font-family: var(--font-display); font-size: 1.7rem; font-weight: 500; }
+.admin-form select { width: 100%; padding: 13px 15px; border: 1px solid #d9ccd1; border-radius: 12px; background: #fff; font: inherit; font-size: 14px; }
+.admin-colors { display: flex; flex-wrap: wrap; gap: 8px; }
+.admin-color { display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border: 1px solid #d9ccd1; border-radius: 999px; background: #fff; font: inherit; font-size: 12px; cursor: pointer; }
+.admin-color span { width: 15px; height: 15px; border-radius: 50%; border: 1px solid rgba(0,0,0,.12); }
+.admin-color.is-on { border-color: #b76e79; background: #fbf0f4; font-weight: 500; }
+.admin-check { display: flex; align-items: center; gap: 9px; font-size: 13px; color: #55494d; }
+.admin-ok { margin: 0; color: #2f7d54; font-size: 13px; font-weight: 500; }
+.admin-list { padding: 30px; border: 1px solid #eadbe1; border-radius: 20px; background: #fbf0f4; }
+.admin-list h2 { margin: 0 0 18px; font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; }
+.admin-list ul { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 12px; }
+.admin-list li { display: grid; grid-template-columns: 52px 1fr auto; gap: 12px; align-items: center; padding: 10px; border-radius: 12px; background: #fff; }
+.admin-list img { width: 52px; height: 64px; object-fit: cover; border-radius: 8px; }
+.admin-list-name { margin: 0; font-size: 13px; font-weight: 500; }
+.admin-list-meta { margin: 3px 0 0; color: #8d7f83; font-size: 12px; }
+.admin-empty { color: #8d7f83; font-size: 13px; line-height: 1.6; }
+
+@media (max-width: 900px) {
+  .admin-layout { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 980px) {
   .header-inner { grid-template-columns: 52px 1fr 104px; height: 72px; padding: 0 14px; }
   .mobile-only { display: grid; justify-self: start; }

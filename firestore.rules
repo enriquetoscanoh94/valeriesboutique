@@ -1,0 +1,30 @@
+rules_version = '2';
+
+// Reglas de seguridad de la base de datos de Valerie's Boutique.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // La duena es admin: se reconoce por su correo.
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'valeriesboutiqueadmin@gmail.com';
+    }
+
+    // Productos: cualquiera los puede ver; solo la admin los crea/edita/borra.
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Pedidos: los crea quien haya iniciado sesion; solo la admin los lee/edita.
+    match /orders/{orderId} {
+      allow create: if request.auth != null;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Perfil del usuario: cada quien lee/escribe solo el suyo.
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}

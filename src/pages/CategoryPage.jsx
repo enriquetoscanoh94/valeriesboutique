@@ -2,12 +2,14 @@ import { useEffect, useMemo, useState } from "react"
 import { Navigate, useParams } from "react-router-dom"
 import ProductCard from "../components/ProductCard"
 import { useLanguage } from "../context/LanguageContext"
-import { getCategory, getProductsByCategory } from "../data/catalog"
+import { useProducts } from "../context/ProductsContext"
+import { getCategory } from "../data/catalog"
 
 export default function CategoryPage() {
   const { slug } = useParams()
   const category = getCategory(slug)
   const { localize, t } = useLanguage()
+  const { getProductsByCategory } = useProducts()
   const [sort, setSort] = useState("featured")
   const [subcategory, setSubcategory] = useState("all")
   const categoryProducts = getProductsByCategory(slug)

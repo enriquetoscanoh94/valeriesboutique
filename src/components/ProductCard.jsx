@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { useLanguage } from "../context/LanguageContext"
-import { getCategory } from "../data/catalog"
+import { getCategory, imageUrl } from "../data/catalog"
 import { ArrowIcon } from "./Icons"
 
 export default function ProductCard({ product, large = false }) {
@@ -9,7 +9,7 @@ export default function ProductCard({ product, large = false }) {
   return (
     <article className={`product-card ${large ? "product-card-large" : ""}`}>
       <Link to={`/producto/${product.id}`} className="product-image-wrap" aria-label={localize(product.name)}>
-        <img src={`${import.meta.env.BASE_URL}${product.images[0]}`} alt={localize(product.name)} loading="lazy" width="720" height="900" />
+        <img src={imageUrl(product.images[0])} alt={localize(product.name)} loading="lazy" width="720" height="900" />
         {product.badge && <span className="product-badge">{localize(product.badge)}</span>}
       </Link>
       <div className="product-card-body">

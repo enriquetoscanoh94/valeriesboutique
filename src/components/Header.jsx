@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, NavLink, useLocation } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 import { useLanguage } from "../context/LanguageContext"
-import { BagIcon, CloseIcon, MenuIcon, SearchIcon } from "./Icons"
+import { BagIcon, CloseIcon, MenuIcon, SearchIcon, UserIcon } from "./Icons"
 import { categories } from "../data/catalog"
 
 export default function Header() {
@@ -45,6 +45,7 @@ export default function Header() {
               {language === "es" ? "EN" : "ES"}
             </button>
             <Link to="/categoria/xv" className="icon-button desktop-only" aria-label={t.actions.search}><SearchIcon /></Link>
+            <Link to="/cuenta" className="icon-button" aria-label={t.account.link}><UserIcon /></Link>
             <Link to="/carrito" className="icon-button cart-link" aria-label={`${t.actions.cart}: ${itemCount}`}>
               <BagIcon />
               {itemCount > 0 && <span className="cart-count">{itemCount}</span>}
@@ -65,6 +66,7 @@ export default function Header() {
           <p className="mobile-menu-label">{language === "es" ? "Más categorías" : "More categories"}</p>
           {primaryCategories.map((category) => <NavLink key={category.slug} to={`/categoria/${category.slug}`}>{localize(category.name)}</NavLink>)}
           <NavLink to="/visita-citas">{t.actions.policies}</NavLink>
+          <NavLink to="/cuenta">{t.account.link}</NavLink>
           <NavLink to="/carrito">{t.actions.cart} {itemCount > 0 && `(${itemCount})`}</NavLink>
         </nav>
         <div className="mobile-menu-contact">

@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 import { useLanguage } from "../context/LanguageContext"
-import { getProduct } from "../data/catalog"
+import { useProducts } from "../context/ProductsContext"
+import { imageUrl } from "../data/catalog"
 
 export default function CartPage() {
   const { items, itemCount, removeItem, updateQuantity } = useCart()
   const { localize, t } = useLanguage()
+  const { getProduct } = useProducts()
   const lines = items.map((item) => ({ ...item, product: getProduct(item.productId) })).filter((item) => item.product)
   const subtotal = lines.reduce((total, item) => total + item.product.price * item.quantity, 0)
   const colorName = (product, value) => localize(product.colors.find((color) => color.value === value)?.name)
@@ -16,7 +18,7 @@ export default function CartPage() {
         <div className="cart-layout">
           <div className="cart-lines">{lines.map((item) => (
             <article className="cart-line" key={item.key}>
-              <Link to={`/producto/${item.product.id}`}><img src={`${import.meta.env.BASE_URL}${item.product.images[0]}`} alt={localize(item.product.name)} /></Link>
+              <Link to={`/producto/${item.product.id}`}><img src={imageUrl(item.product.images[0])} alt={localize(item.product.name)} /></Link>
               <div className="cart-line-info"><h2><Link to={`/producto/${item.product.id}`}>{localize(item.product.name)}</Link></h2><p>{item.size && `${t.cart.size}: ${item.size}`}{item.size && item.color && " · "}{item.color && `${t.cart.color}: ${colorName(item.product, item.color)}`}</p>
                 <div className="cart-line-actions"><div className="quantity-picker compact"><button type="button" onClick={() => updateQuantity(item.key, item.quantity - 1)} disabled={item.quantity === 1}>−</button><output>{item.quantity}</output><button type="button" onClick={() => updateQuantity(item.key, item.quantity + 1)}>+</button></div><button className="remove-button" onClick={() => removeItem(item.key)}>{t.actions.remove}</button></div>
               </div><p className="cart-line-price">${(item.product.price * item.quantity).toFixed(2)}</p>

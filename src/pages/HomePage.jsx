@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom"
 import ProductCard from "../components/ProductCard"
 import { useLanguage } from "../context/LanguageContext"
-import { categories, products } from "../data/catalog"
+import { useProducts } from "../context/ProductsContext"
+import { categories, imageUrl } from "../data/catalog"
 
 const opinions = [
   { author: "Mariana G.", es: "Hermoso vestido y excelente atención. ¡Mi XV quedó perfecta!", en: "Beautiful dress and amazing service. My quince was perfect!" },
@@ -11,10 +12,13 @@ const opinions = [
 
 export default function HomePage() {
   const { language, localize, t } = useLanguage()
+  const { products } = useProducts()
   const featured = products.filter((product) => product.featured)
   const rest = products.filter((product) => !product.featured)
   const asset = (path) => `${import.meta.env.BASE_URL}${path}`
-  const categoryImage = (category) => category.coverImage || products.find((product) => product.category === category.slug)?.images[0]
+  const categoryImage = (category) => category.coverImage
+    ? asset(category.coverImage)
+    : imageUrl(products.find((product) => product.category === category.slug)?.images[0])
 
   return (
     <>
@@ -43,7 +47,7 @@ export default function HomePage() {
         <div className="category-links">
           {categories.map((category) => (
             <Link key={category.slug} to={`/categoria/${category.slug}`}>
-              <img src={asset(categoryImage(category))} alt="" loading="lazy" />
+              <img src={categoryImage(category)} alt="" loading="lazy" />
               <span>{localize(category.name)}</span>
             </Link>
           ))}

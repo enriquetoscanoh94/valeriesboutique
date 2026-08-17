@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/valeriesboutique/',
+  // El sitio se sirve desde la raiz del dominio (Vercel).
+  base: '/',
   plugins: [react(), tailwindcss()],
 })

@@ -3,10 +3,12 @@ import { Link, Navigate, useParams } from "react-router-dom"
 import ProductCard from "../components/ProductCard"
 import { useCart } from "../context/CartContext"
 import { useLanguage } from "../context/LanguageContext"
-import { getCategory, getProduct, products } from "../data/catalog"
+import { useProducts } from "../context/ProductsContext"
+import { getCategory, imageUrl } from "../data/catalog"
 
 export default function ProductPage() {
   const { id } = useParams()
+  const { products, getProduct } = useProducts()
   const product = getProduct(id)
   const { addItem } = useCart()
   const { localize, t } = useLanguage()
@@ -40,7 +42,7 @@ export default function ProductPage() {
     <div className="product-page">
       <nav className="breadcrumbs" aria-label="Breadcrumb"><Link to="/">{t.nav.home}</Link><span>/</span><Link to={`/categoria/${category.slug}`}>{localize(category.name)}</Link><span>/</span><span>{localize(product.name)}</span></nav>
       <section className="product-detail">
-        <div className="product-gallery"><img src={`${import.meta.env.BASE_URL}${product.images[0]}`} alt={localize(product.name)} width="900" height="1125" /></div>
+        <div className="product-gallery"><img src={imageUrl(product.images[0])} alt={localize(product.name)} width="900" height="1125" /></div>
         <div className="product-info">
           <p className="eyebrow">{localize(category.name)}</p><h1>{localize(product.name)}</h1>
           <p className="product-detail-price">${product.price.toFixed(2)}</p><p className="installments">{t.product.payments} ${(product.price / 4).toFixed(2)} · Afterpay</p>

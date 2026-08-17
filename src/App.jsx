@@ -1,7 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import Layout from "./components/Layout"
+import { AuthProvider } from "./context/AuthContext"
 import { CartProvider } from "./context/CartContext"
 import { LanguageProvider } from "./context/LanguageContext"
+import { ProductsProvider } from "./context/ProductsContext"
+import AccountPage from "./pages/AccountPage"
+import AdminPage from "./pages/AdminPage"
 import CartPage from "./pages/CartPage"
 import CategoryPage from "./pages/CategoryPage"
 import CheckoutPage from "./pages/CheckoutPage"
@@ -20,6 +24,8 @@ const router = createBrowserRouter([
       { path: "producto/:id", element: <ProductPage /> },
       { path: "carrito", element: <CartPage /> },
       { path: "checkout", element: <CheckoutPage /> },
+      { path: "cuenta", element: <AccountPage /> },
+      { path: "admin", element: <AdminPage /> },
       { path: "visita-citas", element: <PoliciesPage /> },
       { path: "404", element: <NotFoundPage /> },
       { path: "*", element: <NotFoundPage /> },
@@ -28,5 +34,5 @@ const router = createBrowserRouter([
 ], { basename: import.meta.env.BASE_URL })
 
 export default function App() {
-  return <LanguageProvider><CartProvider><RouterProvider router={router} /></CartProvider></LanguageProvider>
+  return <LanguageProvider><AuthProvider><ProductsProvider><CartProvider><RouterProvider router={router} /></CartProvider></ProductsProvider></AuthProvider></LanguageProvider>
 }
