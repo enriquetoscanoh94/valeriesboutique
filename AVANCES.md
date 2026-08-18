@@ -61,34 +61,48 @@ Tienda en línea real de Valerie's Boutique (19 W Market St, Salinas, CA · tel.
 ## ✅ Fase 5 — Envíos con tarifa real de USPS (FUNCIONA EN MODO PRUEBA)
 
 - **Con Shippo** (se descartó EasyPost porque escondía la API key tras fondear el wallet).
-- `api/_shipping.js` cotiza USPS vía Shippo con **pesos estimados redondeados hacia arriba** (para no perder dinero); `api/shipping.js` es el endpoint; `api/checkout.js` suma el envío al pago de Stripe. En el checkout hay botón **"Calcular envío (USPS)"**.
-- **Probado en producción:** devuelve tarifas reales que cambian por peso y destino (ej. $5.83, $10.01, $14.31 según el caso).
-- **Token de PRUEBA de Shippo** en Vercel (`SHIPPO_API_KEY`). Para tarifas de producción, pedir el **Live Token** en Shippo (Settings > API > "Request Live Token", ~1 día hábil) y cambiarlo en Vercel.
-- **Regla de oro:** al enviar, la dueña **pesa el paquete real** y compra la etiqueta con ese peso.
+- `api/_shipping.js` cotiza USPS vía Shippo; `api/shipping.js` es el endpoint; `api/checkout.js` suma el envío al pago de Stripe. En el checkout hay botón **"Calcular envío (USPS)"**.
+- **Doble protección para no perder dinero:** los **pesos se redondean hacia arriba** + un **colchón fijo de $2** al cliente (`HANDLING_BUFFER_USD`, fácil de cambiar). Ej.: costo real $5.83 → cliente paga $8.
+- **La dueña puede poner el peso real** de cada producto al agregarlo (campo "Peso aprox. en libras"); si lo deja vacío, se usa un estimado por tipo.
+- **Probado en producción:** tarifas reales que cambian por peso y destino.
+- **Token de PRUEBA de Shippo** en Vercel (`SHIPPO_API_KEY`). Para producción: pedir el **Live Token** (Settings > API, ~1 día hábil, ya solicitado) y cambiarlo en Vercel.
 
 ## ✅ Fase 6 — Pedidos + etiquetas en el panel admin (LISTO, modo prueba)
 
-- **Webhook de Stripe activo:** cada pago se guarda como pedido en Firestore (con dirección en piezas + peso). Se usa una **cuenta de servicio de Firebase** (`FIREBASE_SERVICE_ACCOUNT`) y el **secreto del webhook** (`STRIPE_WEBHOOK_SECRET`), ambos en Vercel.
-- **Panel `/admin/pedidos`:** la dueña ve todas las ventas pagadas (cliente, dirección, productos, monto, estado).
-- **Botón "Comprar e imprimir etiqueta":** con un clic compra la etiqueta USPS más barata (vía Shippo, ruta `api/buy-label`, solo admin), abre el **PDF para imprimir** y guarda el **rastreo**; el pedido pasa a "Enviado". **Sin entrar a Shippo.**
-- **Falta para etiquetas REALES:** el **Live Token de Shippo** (solicitado, ~1 día) + un método de pago en Shippo para el franqueo. En modo prueba las etiquetas son de ensayo (gratis).
+- **Webhook de Stripe ACTIVO:** cada pago se guarda como pedido en Firestore (dirección en piezas + peso). Usa **cuenta de servicio de Firebase** (`FIREBASE_SERVICE_ACCOUNT`) y el **secreto del webhook** (`STRIPE_WEBHOOK_SECRET`), ambos en Vercel.
+- **Sección "Pedidos":** la dueña ve todas las ventas pagadas (cliente, dirección, productos, monto, estado).
+- **Botón "Comprar e imprimir etiqueta":** compra la etiqueta USPS más barata (Shippo, ruta `api/buy-label`, solo admin), abre el **PDF** y guarda el **rastreo**; el pedido pasa a "Enviado". **Sin entrar a Shippo.**
+- **Falta para etiquetas REALES:** el **Live Token de Shippo** + método de pago en Shippo para el franqueo. En prueba las etiquetas son de ensayo (gratis).
+
+## ✅ Fase 7 — Panel reorganizado + detalles (LISTO)
+
+- **Panel con pestañas** y encabezado fijo: **Resumen** (ventas del mes, pedidos por enviar, # productos) · **Productos** · **Pedidos**. Cada sección es una página independiente bajo un `AdminLayout` (la protección de admin vive en un solo lugar).
+- **Colores propios:** al agregar un producto, si el color no está en la paleta, la dueña escribe el nombre y elige el tono.
+- **Formulario solo en español** (se quitaron los campos de inglés innecesarios; guarda el mismo texto para ambos idiomas).
+- **Detalles de UX:** aviso claro en rojo si falta elegir talla/color; el **Estado** del envío es una lista de los 50 estados de EE.UU.
+
+## 🧹 Calidad de código
+
+- **Datos del negocio centralizados** en `src/data/business.js` (tel, dirección, ZIP, redes): se cambia en un solo lugar y se refleja en todo el sitio y en las etiquetas.
+- **Panel admin con carga diferida** (`React.lazy`): un cliente que solo compra no descarga el código del panel.
+- Lint limpio, build sin errores.
 
 ---
 
 ## 🔜 Lo que sigue
 
-1. **Terminar envíos** con Shippo (tarifas reales USPS, sin tarjeta).
-2. **Activar cobro real** de Stripe (cuenta del negocio + banco + llaves reales).
-3. **Vista "Compras" en el panel admin** (activar webhook → pedidos en Firestore) + botón imprimir etiqueta.
-4. **Precio con impuestos por producto** (falta confirmar la tasa, Salinas CA ~9.25%).
-5. **Mejoras:** editar los 52 productos base desde el panel, historial de pedidos del cliente, buscador real.
+1. **Activar cobro real** de Stripe (cuenta del negocio + banco + llaves reales).
+2. **Live Token de Shippo** (solicitado, ~1 día) → cambiarlo en Vercel + método de pago en Shippo para etiquetas reales.
+3. **Impuestos (tax) — PENDIENTE:** decidir entre **Stripe Tax** automático (correcto por dirección; requiere permiso de vendedor de California) o **tasa fija** (ej. 9.25%). En EE.UU. el impuesto se suma en el checkout, no por producto.
+4. **Mejoras opcionales:** editar los 52 productos base desde el panel, historial de pedidos para el cliente, buscador real.
 
 ---
 
 ## 🛠️ Notas para desarrollo
 
-- Correr en local: `npm run dev` → `http://localhost:5173/` (ya en la raíz, sin subcarpeta).
-- Compilar: `npm run build`
+- Correr en local: `npm run dev` → `http://localhost:5173/` (en la raíz, sin subcarpeta).
+- Compilar: `npm run build` · Revisar código: `npm run lint`
 - Variables de entorno: `.env` local (protegido en git) + panel de Vercel. Plantilla en `.env.example`.
 - Deploy: automático al hacer `git push` a `main` (Vercel).
-- Rutas API (Vercel, carpeta `/api`): `checkout.js`, `stripe-webhook.js` (dormido), `shipping.js`, más helpers `_firebaseAdmin.js` y `_shipping.js`.
+- Rutas API (carpeta `/api`): `checkout.js`, `shipping.js`, `buy-label.js`, `stripe-webhook.js` + helpers `_firebaseAdmin.js` y `_shipping.js`.
+- Datos del negocio: `src/data/business.js`. Estados de EE.UU.: `src/data/usStates.js`. Catálogo base: `src/data/catalog.js`.
