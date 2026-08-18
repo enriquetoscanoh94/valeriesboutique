@@ -20,15 +20,48 @@ export default function CheckoutPage() {
   const [form, setForm] = useState(EMPTY_FORM)
   const [error, setError] = useState("")
   const [processing, setProcessing] = useState(false)
+  const [shipping, setShipping] = useState(null) // { amount, service }
+  const [shippingLoading, setShippingLoading] = useState(false)
 
   // Une cada item del carrito con su producto real del catalogo
   const lines = items
     .map((item) => ({ ...item, product: getProduct(item.productId) }))
     .filter((item) => item.product)
   const subtotal = lines.reduce((total, item) => total + item.product.price * item.quantity, 0)
+  const shippingCost = form.method === "shipping" && shipping ? shipping.amount : 0
+  const total = subtotal + shippingCost
 
   const colorName = (product, value) => localize(product.colors.find((color) => color.value === value)?.name)
-  const setField = (event) => setForm({ ...form, [event.target.name]: event.target.value })
+
+  const setField = (event) => {
+    const { name, value } = event.target
+    // Si cambia el metodo o la direccion, hay que recalcular el envio.
+    if (name === "method" || name === "zip") setShipping(null)
+    setForm({ ...form, [name]: value })
+  }
+
+  // Cotiza el envio USPS para el ZIP escrito.
+  const calcShipping = async () => {
+    if (!form.zip.trim()) return
+    setError("")
+    setShippingLoading(true)
+    try {
+      const response = await fetch("/api/shipping", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          zip: form.zip.trim(),
+          items: items.map((item) => ({ productId: item.productId, quantity: item.quantity })),
+        }),
+      })
+      const data = await response.json()
+      setShipping(data.amount != null ? data : { amount: null })
+    } catch {
+      setShipping({ amount: null })
+    } finally {
+      setShippingLoading(false)
+    }
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -119,6 +152,10 @@ export default function CheckoutPage() {
                 <div className="field"><label htmlFor="state">{t.checkout.state} *</label><input id="state" name="state" value={form.state} onChange={setField} /></div>
                 <div className="field"><label htmlFor="zip">{t.checkout.zip} *</label><input id="zip" name="zip" inputMode="numeric" value={form.zip} onChange={setField} /></div>
               </div>
+              <button type="button" className="button button-outline calc-shipping" onClick={calcShipping} disabled={shippingLoading || !form.zip.trim()}>
+                {shippingLoading ? t.checkout.calculating : t.checkout.calcShipping}
+              </button>
+              {shipping && shipping.amount === null && <p className="form-error">{t.checkout.shippingUnavailable}</p>}
             </fieldset>
           )}
 
@@ -149,8 +186,18 @@ export default function CheckoutPage() {
             ))}
           </ul>
           <div><span>{t.checkout.subtotal}</span><strong>${subtotal.toFixed(2)}</strong></div>
-          <div><span>{t.checkout.shippingLabel}</span><strong>{t.checkout.shippingTbd}</strong></div>
-          <div className="summary-total"><span>Total</span><strong>${subtotal.toFixed(2)}*</strong></div>
+          <div>
+            <span>{t.checkout.shippingLabel}</span>
+            <strong>
+              {form.method === "pickup"
+                ? t.checkout.shippingPickup
+                : shipping && shipping.amount != null
+                  ? `$${shipping.amount.toFixed(2)}`
+                  : t.checkout.shippingCalc}
+            </strong>
+          </div>
+          {shipping && shipping.amount != null && shipping.service && <p className="recap-meta">USPS · {shipping.service}</p>}
+          <div className="summary-total"><span>Total</span><strong>${total.toFixed(2)}</strong></div>
           <p>{t.cart.note}</p>
           <Link className="continue-link" to="/carrito">← {t.actions.back}</Link>
         </aside>

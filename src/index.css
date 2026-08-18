@@ -244,6 +244,10 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .field textarea { min-height: 92px; resize: vertical; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .field-row.thirds { grid-template-columns: 2fr 1fr 1fr; }
+.button-outline { background: #fff; border-color: #d9ccd1; color: #141414; }
+.button-outline:hover { border-color: #b76e79; background: #fbf0f4; }
+.calc-shipping { justify-self: start; margin-top: 4px; min-height: 42px; padding: 10px 20px; font-size: 12px; }
+.calc-shipping:disabled { opacity: .55; cursor: default; }
 .method-options { display: grid; gap: 12px; }
 .method-option { display: flex; gap: 12px; padding: 16px 18px; border: 1px solid #d9ccd1; border-radius: 14px; cursor: pointer; transition: border-color .2s, background .2s; }
 .method-option:has(input:checked) { border-color: #b76e79; background: #fbf0f4; }

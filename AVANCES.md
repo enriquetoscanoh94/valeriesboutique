@@ -1,6 +1,8 @@
 # Avances — Valerie's Boutique
 
-Registro del progreso del ecommerce. Última actualización: **17 de agosto de 2026**.
+Registro del progreso del ecommerce. Última actualización: **18 de agosto de 2026**.
+
+## 🌐 Sitio en vivo: **https://valeriesboutiques.com**
 
 ---
 
@@ -11,111 +13,75 @@ Tienda en línea real de Valerie's Boutique (19 W Market St, Salinas, CA · tel.
 - Login de clientes y panel de administración para la dueña.
 - Catálogo que la dueña pueda editar sola (subir productos y fotos).
 - Cobro con tarjeta y pagos a plazos (Stripe).
-- Envío a todo Estados Unidos + recoger en tienda.
+- Envío a todo Estados Unidos con **tarifa real de USPS** + recoger en tienda.
 
-## 🧱 Arquitectura (decisión técnica)
+## 🧱 Arquitectura (actual)
 
-El sitio vive en **GitHub Pages** (hosting estático: solo sirve archivos, no corre código de servidor).
-Por eso el "cerebro" de fondo se apoya en **Firebase**:
-
-- **Authentication** → login (Google + correo/contraseña).
-- **Firestore** → base de datos (productos, pedidos, usuarios).
-- **Storage** → fotos de los productos.
-- **Cloud Functions** → mini-servidor seguro para cobrar con **Stripe** (la llave secreta nunca puede ir en el navegador).
-
-Stack del sitio: **React + Vite + Tailwind v4 + React Router**.
+- **Hosting:** **Vercel** (deploy automático en cada `git push` a `main`).
+- **Frontend:** React + Vite + Tailwind v4 + React Router.
+- **Backend seguro:** **rutas API en Vercel** (`/api/...`) para lo que necesita llaves secretas (Stripe, envíos).
+- **Firebase:** Authentication (login), Firestore (base de datos), Storage (fotos).
 
 ---
 
 ## ✅ Fase 1 — Infraestructura Firebase (COMPLETA)
 
-| Elemento | Estado |
-|---|---|
-| Proyecto Firebase `valeries-boutique` | ✅ Creado |
-| Plan **Blaze** (pago por uso) con alerta de gasto de $5 y $300 de crédito gratis | ✅ Activo |
-| App web registrada + claves conectadas en `src/firebase.js` | ✅ Conectado |
-| **Authentication**: Google + Correo/contraseña | ✅ Habilitado |
-| **Firestore** (base de datos, región nam5/EE. UU.) | ✅ Creado |
-| **Storage** (bucket de fotos, us-east1) | ✅ Creado |
-
-> El plan Blaze pide tarjeta pero tiene una capa gratis amplia; para una boutique el gasto normalmente es $0. Se puede volver al plan gratis o cambiar la tarjeta cuando se quiera.
+- Proyecto `valeries-boutique`, plan **Blaze** (alerta de gasto $5, $300 de crédito).
+- **Authentication** (Google + correo/contraseña), **Firestore** y **Storage** activos.
+- Reglas de seguridad de Firestore y Storage **publicadas**.
 
 ## ✅ Fase 2 — Login (COMPLETA)
 
-| Elemento | Estado |
-|---|---|
-| `src/context/AuthContext.jsx` (login Google + correo, registro, cerrar sesión, detección de admin) | ✅ |
-| Página de cuenta `src/pages/AccountPage.jsx` en la ruta `/cuenta` | ✅ |
-| Ícono de "Cuenta" en el header (escritorio) y en el menú móvil | ✅ |
-| Textos del login en español e inglés | ✅ |
-| **Reglas de seguridad de Firestore** publicadas | ✅ |
-| Reglas de seguridad de Storage (`storage.rules`) escritas | 🟡 Pendiente de publicar (ver nota) |
+- Página `/cuenta` con login/registro (Google + correo), detección de **Administradora**.
+- La dueña entra con `valeriesboutiqueadmin@gmail.com` y ve su panel.
 
-**Cómo funciona el login:**
-- Cualquiera puede crear una cuenta con Google o con correo/contraseña.
-- La dueña entra con `valeriesboutiqueadmin@gmail.com` y el sistema la reconoce como **Administradora**.
+## ✅ Fase 3 — Productos en base de datos + panel admin (COMPLETA)
 
-**Reglas de Firestore publicadas:**
-- **Productos:** los ve cualquiera; solo la admin los crea/edita/borra.
-- **Pedidos:** los crea quien inició sesión; solo la admin los lee.
-- **Perfiles:** cada usuario ve/edita únicamente el suyo.
-
-## ✅ Fase 3 — Productos en la base de datos + panel admin (COMPLETA)
-
-| Elemento | Estado |
-|---|---|
-| `src/context/ProductsContext.jsx`: lee productos de Firestore **en vivo** y los **mezcla** con el catálogo base | ✅ |
-| Todas las páginas (inicio, categoría, producto, carrito, checkout) leen desde ese contexto | ✅ |
-| Panel de administración en la ruta `/admin` (solo la dueña puede entrar) | ✅ |
-| Formulario "Agregar producto": nombre, categoría, subcategoría, precio, tallas, colores, descripción, **foto** y destacado | ✅ |
-| Subida de fotos a **Storage** + guardado del producto en **Firestore** | ✅ |
-| Lista de productos agregados con opción de **borrar** | ✅ |
-| Botón al panel desde la cuenta (cuando entra la admin) | ✅ |
-| **Reglas de Storage publicadas** | ✅ |
-
-**Enfoque (importante):** los 52 productos de muestra siguen en el código (no se tocaron, cero riesgo). Los productos que la dueña agregue se guardan en Firestore y **aparecen mezclados al instante** en la tienda. Por ahora el panel administra los productos nuevos; editar los de muestra queda para más adelante.
-
-**Cómo agrega productos la dueña:**
-1. Entra a su cuenta (`/cuenta`) con Google.
-2. Toca **"Panel de administración"**.
-3. Llena el formulario, sube una foto y da **"Agregar producto"**. Aparece solito en el catálogo.
-
----
+- `/admin`: la dueña agrega productos con foto (van a Firestore + Storage) y aparecen al instante.
+- Los 52 productos de muestra siguen en el código (intactos); los nuevos se mezclan en vivo.
 
 ## ✅ Migración a Vercel (COMPLETA)
 
-El sitio ya **no vive en GitHub Pages**, ahora está en **Vercel**:
+- Sitio movido de GitHub Pages a **Vercel**, en la cuenta de la clienta, conectado al GitHub del desarrollador.
+- URL limpia en la raíz, llaves en variables de entorno, `vercel.json` con ruteo SPA + cabeceras de seguridad.
 
-- 🌐 **Producción:** https://valeriesboutique.vercel.app (URL limpia, en la raíz)
-- **Hosting** en la cuenta de Vercel de la **clienta**, conectado al **GitHub del desarrollador** (repo `valeriesboutique`).
-- **Deploy automático:** cada `git push` a `main` publica solo.
-- **Config limpia:** llaves de Firebase en variables de entorno (`.env` local protegido + panel de Vercel), `vercel.json` con ruteo SPA y **cabeceras de seguridad** (HSTS, anti-clickjacking, etc.).
-- Se quitó el deploy roto de GitHub Pages.
-- El dominio `valeriesboutique.vercel.app` se autorizó en Firebase para que el login siga funcionando.
+## ✅ Dominio propio (COMPLETO)
 
-**Firebase no cambió:** login, base de datos y fotos siguen igual. Solo cambió dónde vive el sitio.
+- **https://valeriesboutiques.com** comprado en **GoDaddy**, conectado a Vercel por DNS (A + CNAME), con **SSL**.
+- Autorizado en Firebase para que el login funcione en el dominio nuevo.
 
-## 🟡 Fase 4 — Pagos con Stripe (EN PROGRESO)
+## ✅ Fase 4 — Pagos con Stripe (FUNCIONA EN MODO PRUEBA)
 
-- **Código listo:** `api/checkout.js` crea la sesión de pago de Stripe (precios verificados en el servidor), el botón "Pagar" del checkout redirige a Stripe, y hay página **`/pago-exitoso`**.
-- **Modo prueba:** la cuenta de Stripe está en modo test; se usa la llave secreta de prueba (`STRIPE_SECRET_KEY` en Vercel). Se prueba con la tarjeta `4242 4242 4242 4242`.
-- **Los pedidos pagados** se ven, por ahora, en el **panel de Stripe** (con correo, monto y datos del cliente).
-- **Dormido para después:** `api/stripe-webhook.js` + `api/_firebaseAdmin.js` (guardar pedidos en Firestore). Se activa cuando se genere la cuenta de servicio de Firebase y se registre el webhook.
-- **Para salir en vivo (cobro real):** activar la cuenta de Stripe (datos del negocio + banco) y cambiar a las llaves reales.
+- `api/checkout.js` crea la sesión de pago (precios verificados en el servidor); botón "Pagar" redirige a Stripe; página `/pago-exitoso`.
+- **Probado de punta a punta:** el checkout abre la página de pago de Stripe de "valerie's boutique", con tarjeta + pagos a plazos (Affirm/Klarna).
+- Se prueba con la tarjeta `4242 4242 4242 4242`.
+- **Dormido para después:** `api/stripe-webhook.js` + `api/_firebaseAdmin.js` (guardar pedidos en Firestore).
+- **Para cobro REAL:** activar la cuenta de Stripe (datos del negocio + banco) y cambiar a las llaves reales.
+
+## 🟡 Fase 5 — Envíos con tarifa real de USPS (EN PROGRESO)
+
+- **Código listo:** `api/_shipping.js` (pesos estimados por tipo de producto + cotización), `api/shipping.js` (endpoint), y `api/checkout.js` ya suma el envío al pago de Stripe. En el checkout hay botón **"Calcular envío (USPS)"**.
+- **Bloqueo con EasyPost:** EasyPost esconde la API key hasta **fondear el wallet** (meter dinero) — no nos sirve.
+- **Decisión:** cambiar a **Shippo** → mismas tarifas reales de USPS, la API key se obtiene de inmediato, gratis y sin tarjeta. Solo se cambia la llave y el endpoint.
+- **Regla de oro (para no perder dinero):** los pesos se **redondean hacia arriba**, así el cliente nunca paga de menos. Al enviar, la dueña **pesa el paquete real** y compra la etiqueta con ese peso.
+- **Pendiente:** llave de Shippo, ajustar el endpoint, y (opcional) botón "Comprar e imprimir etiqueta" en el panel de Compras.
+
+---
 
 ## 🔜 Lo que sigue
 
-- **Probar el pago** con tarjeta de prueba en producción.
-- **Comprar el dominio propio** (ej. valeriesboutique.com) y conectarlo en Vercel + Firebase.
-- **Activar webhook + pedidos en Firestore** (cuenta de servicio de Firebase).
-- **Mejora futura:** editar/borrar también los 52 productos de muestra desde el panel.
-- **Pendiente por confirmar:** paquetería de envío (¿USPS o UPS?).
+1. **Terminar envíos** con Shippo (tarifas reales USPS, sin tarjeta).
+2. **Activar cobro real** de Stripe (cuenta del negocio + banco + llaves reales).
+3. **Vista "Compras" en el panel admin** (activar webhook → pedidos en Firestore) + botón imprimir etiqueta.
+4. **Precio con impuestos por producto** (falta confirmar la tasa, Salinas CA ~9.25%).
+5. **Mejoras:** editar los 52 productos base desde el panel, historial de pedidos del cliente, buscador real.
 
 ---
 
 ## 🛠️ Notas para desarrollo
 
-- Correr el sitio en local: `npm run dev` → se abre en `http://localhost:5173/valeriesboutique/`
-  (el sitio usa el prefijo `/valeriesboutique/` por GitHub Pages, no la raíz).
-- Compilar para producción: `npm run build`
-- Archivos clave nuevos: `src/firebase.js`, `src/context/AuthContext.jsx`, `src/pages/AccountPage.jsx`, `firestore.rules`, `storage.rules`.
+- Correr en local: `npm run dev` → `http://localhost:5173/` (ya en la raíz, sin subcarpeta).
+- Compilar: `npm run build`
+- Variables de entorno: `.env` local (protegido en git) + panel de Vercel. Plantilla en `.env.example`.
+- Deploy: automático al hacer `git push` a `main` (Vercel).
+- Rutas API (Vercel, carpeta `/api`): `checkout.js`, `stripe-webhook.js` (dormido), `shipping.js`, más helpers `_firebaseAdmin.js` y `_shipping.js`.

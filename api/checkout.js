@@ -3,6 +3,7 @@
 // para que nadie pueda alterar el total desde el navegador.
 import Stripe from "stripe"
 import { products as catalogProducts } from "../src/data/catalog.js"
+import { quoteUspsShipping } from "./_shipping.js"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -43,9 +44,25 @@ export default async function handler(req, res) {
 
     const origin = req.headers.origin || `https://${req.headers.host}`
 
+    // Si es envio a domicilio, cotiza USPS y lo agrega como costo de envio en Stripe.
+    let shipping_options
+    if (customer.method === "shipping" && customer.zip) {
+      const quote = await quoteUspsShipping(customer.zip, items)
+      if (quote) {
+        shipping_options = [{
+          shipping_rate_data: {
+            type: "fixed_amount",
+            fixed_amount: { amount: Math.round(quote.amount * 100), currency: "usd" },
+            display_name: `Envio USPS (${quote.service})`,
+          },
+        }]
+      }
+    }
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items,
+      shipping_options,
       success_url: `${origin}/pago-exitoso?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/checkout`,
       customer_email: customer.email || undefined,
