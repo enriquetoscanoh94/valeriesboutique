@@ -3,6 +3,7 @@ import ProductCard from "../components/ProductCard"
 import { useLanguage } from "../context/LanguageContext"
 import { useProducts } from "../context/ProductsContext"
 import { categories, imageUrl } from "../data/catalog"
+import { business } from "../data/business"
 
 const opinions = [
   { author: "Mariana G.", es: "Hermoso vestido y excelente atención. ¡Mi XV quedó perfecta!", en: "Beautiful dress and amazing service. My quince was perfect!" },
@@ -67,9 +68,9 @@ export default function HomePage() {
       <section className="story-section">
         <div className="story-art"><img src={asset("flores/ramo-izquierda.webp")} alt="" loading="lazy" /></div>
         <div className="story-copy">
-          <p className="eyebrow">19 W Market St · Salinas</p>
+          <p className="eyebrow">{business.street} · {business.city}</p>
           <h2>{t.home.storyTitle}</h2><p>{t.home.story}</p>
-          <a className="text-link" href="https://maps.google.com/?q=19+W+Market+St+Salinas+CA+93901" target="_blank" rel="noreferrer">{t.home.directions} →</a>
+          <a className="text-link" href={business.maps} target="_blank" rel="noreferrer">{t.home.directions} →</a>
         </div>
       </section>
 

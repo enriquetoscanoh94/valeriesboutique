@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext"
 import { useLanguage } from "../context/LanguageContext"
 import { BagIcon, CloseIcon, MenuIcon, SearchIcon, UserIcon } from "./Icons"
 import { categories } from "../data/catalog"
+import { business } from "../data/business"
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -70,8 +71,8 @@ export default function Header() {
           <NavLink to="/carrito">{t.actions.cart} {itemCount > 0 && `(${itemCount})`}</NavLink>
         </nav>
         <div className="mobile-menu-contact">
-          <p>19 W Market St · Salinas, CA</p>
-          <a href="tel:+18319980610">(831) 998-0610</a>
+          <p>{business.street} · {business.city}, {business.state}</p>
+          <a href={business.phoneLink}>{business.phoneDisplay}</a>
         </div>
       </aside>
     </>

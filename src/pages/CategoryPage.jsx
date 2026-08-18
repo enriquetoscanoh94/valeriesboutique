@@ -4,6 +4,7 @@ import ProductCard from "../components/ProductCard"
 import { useLanguage } from "../context/LanguageContext"
 import { useProducts } from "../context/ProductsContext"
 import { getCategory } from "../data/catalog"
+import { business } from "../data/business"
 
 export default function CategoryPage() {
   const { slug } = useParams()
@@ -51,7 +52,7 @@ export default function CategoryPage() {
         {sortedProducts.length > 0 ? <div className="product-grid catalog-grid">{sortedProducts.map((product) => <ProductCard key={product.id} product={product} />)}</div> : (
           <div className="empty-state">
             {category.coverImage && <img src={`${import.meta.env.BASE_URL}${category.coverImage}`} alt={localize(category.name)} />}
-            <div><p className="eyebrow">{localize(category.name)}</p><h2>{t.catalog.empty}</h2><p>{localize(category.description)}</p><a className="button button-dark" href={`https://wa.me/18319980610?text=${availabilityMessage}`} target="_blank" rel="noreferrer">{t.actions.availability}</a></div>
+            <div><p className="eyebrow">{localize(category.name)}</p><h2>{t.catalog.empty}</h2><p>{localize(category.description)}</p><a className="button button-dark" href={`https://wa.me/${business.whatsapp}?text=${availabilityMessage}`} target="_blank" rel="noreferrer">{t.actions.availability}</a></div>
           </div>
         )}
       </section>

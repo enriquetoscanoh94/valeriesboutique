@@ -5,6 +5,7 @@ import { useCart } from "../context/CartContext"
 import { useLanguage } from "../context/LanguageContext"
 import { useProducts } from "../context/ProductsContext"
 import { getCategory, imageUrl } from "../data/catalog"
+import { business } from "../data/business"
 
 export default function ProductPage() {
   const { id } = useParams()
@@ -54,7 +55,7 @@ export default function ProductPage() {
             <label className="quantity-picker"><span className="sr-only">{t.cart.quantity}</span><button type="button" onClick={() => setQuantity((value) => Math.max(1, value - 1))}>−</button><output>{quantity}</output><button type="button" onClick={() => setQuantity((value) => value + 1)}>+</button></label>
             <button className="button button-dark add-button" onClick={handleAdd}>{added ? `✓ ${t.product.added}` : t.actions.add}</button>
           </div>
-          <div className="pickup-note"><span>⌂</span><p>{t.product.pickup}<small>{t.product.shippingNote} · 19 W Market St, Salinas, CA</small></p></div>
+          <div className="pickup-note"><span>⌂</span><p>{t.product.pickup}<small>{t.product.shippingNote} · {business.street}, {business.city}, {business.state}</small></p></div>
         </div>
       </section>
       {related.length > 0 && <section className="section related-products"><div className="section-heading"><p className="eyebrow">Complete the look</p><h2>{t.product.related}</h2></div><div className="product-grid">{related.map((item) => <ProductCard key={item.id} product={item} />)}</div></section>}

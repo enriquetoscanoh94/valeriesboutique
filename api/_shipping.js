@@ -1,5 +1,6 @@
 // Cotizacion de envios USPS via Shippo (lado servidor).
 import { products as catalogProducts } from "../src/data/catalog.js"
+import { business } from "../src/data/business.js"
 import { getAdminDb } from "./_firebaseAdmin.js"
 
 // Peso estimado por tipo de producto, en ONZAS (redondeado HACIA ARRIBA
@@ -64,7 +65,7 @@ export async function quoteUspsShipping(zip, items) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      address_from: { zip: "93901", country: "US" },
+      address_from: { zip: business.zip, country: "US" },
       address_to: { zip, country: "US" },
       parcels: [{
         length: "14", width: "11", height: "4", distance_unit: "in",
@@ -85,15 +86,15 @@ export async function quoteUspsShipping(zip, items) {
   return { amount, service: cheapest.servicelevel?.name || "USPS" }
 }
 
-// Direccion de remitente (aparece en la etiqueta).
+// Direccion de remitente (aparece en la etiqueta). Datos del negocio centralizados.
 const FROM_ADDRESS = {
-  name: "Valerie's Boutique",
-  street1: "19 W Market St",
-  city: "Salinas",
-  state: "CA",
-  zip: "93901",
+  name: business.name,
+  street1: business.street,
+  city: business.city,
+  state: business.state,
+  zip: business.zip,
   country: "US",
-  phone: "8319980610",
+  phone: business.phone,
 }
 
 // Compra la etiqueta USPS mas barata para un pedido y devuelve el PDF + tracking.

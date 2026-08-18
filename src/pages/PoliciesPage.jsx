@@ -1,4 +1,5 @@
 import { useLanguage } from "../context/LanguageContext"
+import { business } from "../data/business"
 
 export default function PoliciesPage() {
   const { t } = useLanguage()
@@ -14,7 +15,7 @@ export default function PoliciesPage() {
       </section>
       <section className="appointment-panel">
         <div><p className="eyebrow">{policy.notesTitle}</p><ul>{policy.notes.map((note) => <li key={note}>{note}</li>)}</ul><small>{policy.source}</small></div>
-        <a className="button button-primary" href="https://www.instagram.com/valeries._boutique_/" target="_blank" rel="noreferrer">{t.actions.appointment}</a>
+        <a className="button button-primary" href={business.instagram} target="_blank" rel="noreferrer">{t.actions.appointment}</a>
       </section>
     </div>
   )
