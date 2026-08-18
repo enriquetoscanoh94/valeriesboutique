@@ -1,9 +1,7 @@
 import { useMemo, useState } from "react"
-import { Link, Navigate } from "react-router-dom"
 import { addDoc, collection, deleteDoc, doc, serverTimestamp } from "firebase/firestore"
 import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage"
 import { db, storage } from "../firebase"
-import { useAuth } from "../context/AuthContext"
 import { useProducts } from "../context/ProductsContext"
 import { useLanguage } from "../context/LanguageContext"
 import { categories, imageUrl, palette } from "../data/catalog"
@@ -15,8 +13,8 @@ const EMPTY = {
   price: "", sizes: "", weightLb: "", descEs: "", descEn: "", featured: false,
 }
 
+// Seccion "Productos" del panel (protegida por AdminLayout).
 export default function AdminPage() {
-  const { user, loading, isAdmin } = useAuth()
   const { dbProducts } = useProducts()
   const { localize } = useLanguage()
 
@@ -29,10 +27,6 @@ export default function AdminPage() {
 
   const currentCategory = useMemo(() => categories.find((cat) => cat.slug === form.category), [form.category])
   const subNames = currentCategory ? currentCategory.subcategories.es : []
-
-  // Solo la administradora puede entrar aqui.
-  if (loading) return <div className="admin-page section"><p>Cargando…</p></div>
-  if (!user || !isAdmin) return <Navigate to="/cuenta" replace />
 
   const setField = (event) => {
     const { name, value, type, checked } = event.target
@@ -101,13 +95,9 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="admin-page section">
-      <header className="admin-heading">
-        <p className="eyebrow">Panel de administración</p>
-        <h1>Productos</h1>
-        <p className="admin-sub">Agrega productos nuevos a la tienda. Aparecerán al instante en el catálogo.</p>
-        <Link className="button button-dark admin-orders-link" to="/admin/pedidos">Ver pedidos y etiquetas →</Link>
-      </header>
+    <>
+      <h2 className="admin-section-title">Productos</h2>
+      <p className="admin-sub">Agrega productos nuevos a la tienda. Aparecerán al instante en el catálogo.</p>
 
       <div className="admin-layout">
         <form className="admin-form" onSubmit={handleSubmit}>
@@ -165,7 +155,7 @@ export default function AdminPage() {
         </form>
 
         <aside className="admin-list">
-          <h2>Tus productos ({dbProducts.length})</h2>
+          <h3>Tus productos ({dbProducts.length})</h3>
           {dbProducts.length === 0 ? (
             <p className="admin-empty">Aún no has agregado productos. Los del catálogo base no se listan aquí.</p>
           ) : (
@@ -182,9 +172,8 @@ export default function AdminPage() {
               ))}
             </ul>
           )}
-          <Link className="continue-link" to="/">← Volver a la tienda</Link>
         </aside>
       </div>
-    </div>
+    </>
   )
 }

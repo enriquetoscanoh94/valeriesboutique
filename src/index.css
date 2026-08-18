@@ -304,9 +304,20 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .account-loading { color: #766b6f; }
 
 /* ---------- Panel admin ---------- */
-.admin-heading { margin-bottom: 30px; }
-.admin-heading h1 { margin: 6px 0 8px; font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 500; }
-.admin-sub { color: #766b6f; }
+.admin-shell-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.admin-shell-title { margin: 4px 0 0; font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; }
+.admin-shell-user { display: flex; align-items: center; gap: 14px; font-size: 13px; color: #55494d; }
+.admin-tabs { display: flex; gap: 6px; margin: 22px 0 30px; padding-bottom: 2px; border-bottom: 1px solid #eadbe1; flex-wrap: wrap; }
+.admin-tabs a { padding: 10px 18px; border-radius: 10px 10px 0 0; color: #8d7f83; font-size: 14px; font-weight: 500; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.admin-tabs a:hover { color: #141414; background: #fbf0f4; }
+.admin-tabs a.active { color: #a95f6c; border-bottom-color: #a95f6c; }
+.admin-section-title { margin: 0 0 6px; font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 500; }
+.admin-sub { color: #766b6f; margin: 0 0 24px; }
+.admin-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.stat-card { padding: 26px; border: 1px solid #eadbe1; border-radius: 18px; background: #fff; }
+.stat-link:hover { border-color: #b76e79; background: #fbf0f4; }
+.stat-value { margin: 0; font-family: var(--font-display); font-size: 2.4rem; font-weight: 600; color: #141414; }
+.stat-label { margin: 6px 0 0; color: #8d7f83; font-size: 13px; }
 .admin-layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: 44px; align-items: start; }
 .admin-form { display: grid; gap: 16px; padding: 30px; border: 1px solid #eadbe1; border-radius: 20px; background: #fff; }
 .admin-form h2 { margin: 0; font-family: var(--font-display); font-size: 1.7rem; font-weight: 500; }
@@ -326,7 +337,6 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .admin-list-name { margin: 0; font-size: 13px; font-weight: 500; }
 .admin-list-meta { margin: 3px 0 0; color: #8d7f83; font-size: 12px; }
 .admin-empty { color: #8d7f83; font-size: 13px; line-height: 1.6; }
-.admin-orders-link { margin-top: 16px; }
 
 /* ---------- Pedidos (admin) ---------- */
 .orders-list { display: grid; gap: 16px; }
@@ -352,6 +362,7 @@ fieldset { border: 0; padding: 0; margin: 0; }
 @media (max-width: 900px) {
   .admin-layout { grid-template-columns: 1fr; }
   .order-body { grid-template-columns: 1fr; }
+  .admin-stats { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 980px) {

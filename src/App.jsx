@@ -5,8 +5,10 @@ import { CartProvider } from "./context/CartContext"
 import { LanguageProvider } from "./context/LanguageContext"
 import { ProductsProvider } from "./context/ProductsContext"
 import AccountPage from "./pages/AccountPage"
+import AdminLayout from "./pages/AdminLayout"
 import AdminPage from "./pages/AdminPage"
 import AdminOrdersPage from "./pages/AdminOrdersPage"
+import AdminResumenPage from "./pages/AdminResumenPage"
 import CartPage from "./pages/CartPage"
 import CategoryPage from "./pages/CategoryPage"
 import CheckoutPage from "./pages/CheckoutPage"
@@ -28,8 +30,15 @@ const router = createBrowserRouter([
       { path: "checkout", element: <CheckoutPage /> },
       { path: "pago-exitoso", element: <PagoExitosoPage /> },
       { path: "cuenta", element: <AccountPage /> },
-      { path: "admin", element: <AdminPage /> },
-      { path: "admin/pedidos", element: <AdminOrdersPage /> },
+      {
+        path: "admin",
+        element: <AdminLayout />,
+        children: [
+          { index: true, element: <AdminResumenPage /> },
+          { path: "productos", element: <AdminPage /> },
+          { path: "pedidos", element: <AdminOrdersPage /> },
+        ],
+      },
       { path: "visita-citas", element: <PoliciesPage /> },
       { path: "404", element: <NotFoundPage /> },
       { path: "*", element: <NotFoundPage /> },

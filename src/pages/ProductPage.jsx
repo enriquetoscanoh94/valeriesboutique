@@ -26,7 +26,7 @@ export default function ProductPage() {
     setAdded(false)
   }, [id, product])
 
-  const related = useMemo(() => products.filter((item) => item.id !== id && (item.category === product?.category || item.featured)).slice(0, 3), [id, product])
+  const related = useMemo(() => products.filter((item) => item.id !== id && (item.category === product?.category || item.featured)).slice(0, 3), [id, product, products])
   if (!product) return <Navigate to="/404" replace />
   const category = getCategory(product.category)
   const handleAdd = () => {

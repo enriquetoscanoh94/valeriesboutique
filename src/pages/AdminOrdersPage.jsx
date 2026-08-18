@@ -1,29 +1,22 @@
 import { useEffect, useState } from "react"
-import { Link, Navigate } from "react-router-dom"
 import { collection, doc, onSnapshot, orderBy, query, updateDoc } from "firebase/firestore"
 import { auth, db } from "../firebase"
-import { useAuth } from "../context/AuthContext"
 
-// Herramienta interna para la duena: en espanol.
+// Seccion "Pedidos" del panel (protegida por AdminLayout).
 export default function AdminOrdersPage() {
-  const { user, loading, isAdmin } = useAuth()
   const [orders, setOrders] = useState([])
   const [ordersLoading, setOrdersLoading] = useState(true)
   const [busyId, setBusyId] = useState("")
   const [error, setError] = useState("")
 
   useEffect(() => {
-    if (!isAdmin) return
     const ordersQuery = query(collection(db, "orders"), orderBy("createdAt", "desc"))
     const unsubscribe = onSnapshot(ordersQuery, (snapshot) => {
       setOrders(snapshot.docs.map((docSnap) => ({ id: docSnap.id, ...docSnap.data() })))
       setOrdersLoading(false)
     }, () => setOrdersLoading(false))
     return unsubscribe
-  }, [isAdmin])
-
-  if (loading) return <div className="admin-page section"><p>Cargando…</p></div>
-  if (!user || !isAdmin) return <Navigate to="/cuenta" replace />
+  }, [])
 
   // Compra la etiqueta USPS del pedido y guarda el PDF + tracking.
   const buyLabel = async (order) => {
@@ -60,13 +53,9 @@ export default function AdminOrdersPage() {
   }
 
   return (
-    <div className="admin-page section">
-      <header className="admin-heading">
-        <p className="eyebrow">Panel de administración</p>
-        <h1>Pedidos</h1>
-        <p className="admin-sub">Aquí ves las ventas pagadas. Para las de envío, compra e imprime la etiqueta USPS con un clic.</p>
-        <Link className="continue-link" to="/admin">← Volver a productos</Link>
-      </header>
+    <>
+      <h2 className="admin-section-title">Pedidos</h2>
+      <p className="admin-sub">Aquí ves las ventas pagadas. Para las de envío, compra e imprime la etiqueta USPS con un clic.</p>
 
       {error && <p className="form-error">{error}</p>}
 
@@ -131,6 +120,6 @@ export default function AdminOrdersPage() {
           })}
         </div>
       )}
-    </div>
+    </>
   )
 }
