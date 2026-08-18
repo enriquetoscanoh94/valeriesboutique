@@ -317,6 +317,7 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .admin-color.is-on { border-color: #b76e79; background: #fbf0f4; font-weight: 500; }
 .admin-check { display: flex; align-items: center; gap: 9px; font-size: 13px; color: #55494d; }
 .admin-ok { margin: 0; color: #2f7d54; font-size: 13px; font-weight: 500; }
+.admin-hint { margin: -4px 0 0; color: #8d7f83; font-size: 12px; line-height: 1.5; }
 .admin-list { padding: 30px; border: 1px solid #eadbe1; border-radius: 20px; background: #fbf0f4; }
 .admin-list h2 { margin: 0 0 18px; font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; }
 .admin-list ul { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 12px; }

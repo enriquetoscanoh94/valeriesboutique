@@ -1,5 +1,6 @@
 // Cotizacion de envios USPS via Shippo (lado servidor).
 import { products as catalogProducts } from "../src/data/catalog.js"
+import { getAdminDb } from "./_firebaseAdmin.js"
 
 // Peso estimado por tipo de producto, en ONZAS (redondeado HACIA ARRIBA
 // para que el cliente nunca pague de menos y el negocio no pierda).
@@ -22,14 +23,26 @@ const DEFAULT_WEIGHT_OZ = 32
 const HANDLING_BUFFER_USD = 2
 
 function weightForProduct(product) {
+  // 1) Si la admin le puso un peso al producto, se usa ese.
+  if (product?.weightOz) return Number(product.weightOz)
+  // 2) Si no, un estimado por tipo de producto.
   return WEIGHT_OZ_BY_CATEGORY[product?.category] ?? DEFAULT_WEIGHT_OZ
 }
 
 // Suma el peso total del carrito (onzas), minimo 1.
-export function totalWeightOz(items) {
+// Los productos base estan en el codigo; los que agrega la admin, en Firestore.
+export async function totalWeightOz(items) {
+  let db = null
   let ounces = 0
   for (const item of items) {
-    const product = catalogProducts.find((p) => p.id === item.productId)
+    let product = catalogProducts.find((p) => p.id === item.productId)
+    if (!product) {
+      try {
+        if (!db) db = getAdminDb()
+        const snap = await db.collection("products").doc(item.productId).get()
+        if (snap.exists) product = snap.data()
+      } catch { /* si falla, se usa el peso por defecto */ }
+    }
     const quantity = Math.max(1, Number(item.quantity) || 1)
     ounces += weightForProduct(product) * quantity
   }
@@ -42,7 +55,7 @@ export async function quoteUspsShipping(zip, items) {
   const token = process.env.SHIPPO_API_KEY
   if (!token) return null
 
-  const weight = totalWeightOz(items)
+  const weight = await totalWeightOz(items)
 
   const response = await fetch("https://api.goshippo.com/shipments/", {
     method: "POST",

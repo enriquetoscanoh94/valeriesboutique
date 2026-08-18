@@ -12,7 +12,7 @@ const paletteList = Object.values(palette)
 
 const EMPTY = {
   nameEs: "", nameEn: "", category: categories[0].slug, subcategory: "0",
-  price: "", sizes: "", descEs: "", descEn: "", featured: false,
+  price: "", sizes: "", weightLb: "", descEs: "", descEn: "", featured: false,
 }
 
 export default function AdminPage() {
@@ -72,6 +72,9 @@ export default function AdminPage() {
         imagePath: path,
         sizes: form.sizes.split(",").map((size) => size.trim()).filter(Boolean),
         colors: chosenColors,
+        // Peso para el envio: se guarda en onzas (16 oz = 1 lb). Si se deja vacio,
+        // el sistema usa un estimado por tipo de producto.
+        weightOz: form.weightLb ? Math.round(Number(form.weightLb) * 16) : null,
         featured: form.featured,
         badge: { es: currentCategory.subcategories.es[subIndex], en: currentCategory.subcategories.en[subIndex] },
         createdAt: serverTimestamp(),
@@ -130,10 +133,12 @@ export default function AdminPage() {
             </div>
           </div>
 
-          <div className="field-row">
+          <div className="field-row thirds">
             <div className="field"><label htmlFor="price">Precio (USD) *</label><input id="price" name="price" type="number" min="0" step="1" value={form.price} onChange={setField} /></div>
-            <div className="field"><label htmlFor="sizes">Tallas (separadas por coma)</label><input id="sizes" name="sizes" value={form.sizes} onChange={setField} placeholder="4, 6, 8, 10" /></div>
+            <div className="field"><label htmlFor="weightLb">Peso aprox. (libras)</label><input id="weightLb" name="weightLb" type="number" min="0" step="0.1" value={form.weightLb} onChange={setField} placeholder="ej. 2.5" /></div>
+            <div className="field"><label htmlFor="sizes">Tallas (coma)</label><input id="sizes" name="sizes" value={form.sizes} onChange={setField} placeholder="4, 6, 8" /></div>
           </div>
+          <p className="admin-hint">El peso ayuda a cotizar el envío exacto. Si lo dejas vacío, se usa un estimado por tipo de producto.</p>
 
           <div className="field">
             <label>Colores disponibles</label>

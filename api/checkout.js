@@ -79,7 +79,7 @@ export default async function handler(req, res) {
         eventType: customer.eventType || "",
         eventDate: customer.eventDate || "",
         notes: customer.notes || "",
-        weightOz: String(totalWeightOz(items)),
+        weightOz: String(await totalWeightOz(items)),
       },
     })
 
