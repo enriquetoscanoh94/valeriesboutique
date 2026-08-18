@@ -17,6 +17,10 @@ const WEIGHT_OZ_BY_CATEGORY = {
 }
 const DEFAULT_WEIGHT_OZ = 32
 
+// Colchon que se suma al costo de envio que se le cobra al cliente (en dolares),
+// para que el negocio nunca pierda. Cambia este numero si quieres mas o menos margen.
+const HANDLING_BUFFER_USD = 3
+
 function weightForProduct(product) {
   return WEIGHT_OZ_BY_CATEGORY[product?.category] ?? DEFAULT_WEIGHT_OZ
 }
@@ -62,9 +66,9 @@ export async function quoteUspsShipping(zip, items) {
   if (!rates.length) return null
 
   const cheapest = rates.reduce((a, b) => (Number(a.amount) <= Number(b.amount) ? a : b))
-  // Redondeamos HACIA ARRIBA al siguiente dolar: el cliente paga un poco de mas
-  // y el negocio nunca pierde en el envio.
-  const amount = Math.ceil(Number(cheapest.amount))
+  // Costo real de USPS + colchon, redondeado hacia arriba al siguiente dolar.
+  // Asi el cliente paga unos dolares de mas y el negocio nunca pierde en el envio.
+  const amount = Math.ceil(Number(cheapest.amount) + HANDLING_BUFFER_USD)
   return { amount, service: cheapest.servicelevel?.name || "USPS" }
 }
 
