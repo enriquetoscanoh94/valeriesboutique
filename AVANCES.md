@@ -58,13 +58,14 @@ Tienda en línea real de Valerie's Boutique (19 W Market St, Salinas, CA · tel.
 - **Dormido para después:** `api/stripe-webhook.js` + `api/_firebaseAdmin.js` (guardar pedidos en Firestore).
 - **Para cobro REAL:** activar la cuenta de Stripe (datos del negocio + banco) y cambiar a las llaves reales.
 
-## 🟡 Fase 5 — Envíos con tarifa real de USPS (EN PROGRESO)
+## ✅ Fase 5 — Envíos con tarifa real de USPS (FUNCIONA EN MODO PRUEBA)
 
-- **Código listo:** `api/_shipping.js` (pesos estimados por tipo de producto + cotización), `api/shipping.js` (endpoint), y `api/checkout.js` ya suma el envío al pago de Stripe. En el checkout hay botón **"Calcular envío (USPS)"**.
-- **Bloqueo con EasyPost:** EasyPost esconde la API key hasta **fondear el wallet** (meter dinero) — no nos sirve.
-- **Decisión:** cambiar a **Shippo** → mismas tarifas reales de USPS, la API key se obtiene de inmediato, gratis y sin tarjeta. Solo se cambia la llave y el endpoint.
-- **Regla de oro (para no perder dinero):** los pesos se **redondean hacia arriba**, así el cliente nunca paga de menos. Al enviar, la dueña **pesa el paquete real** y compra la etiqueta con ese peso.
-- **Pendiente:** llave de Shippo, ajustar el endpoint, y (opcional) botón "Comprar e imprimir etiqueta" en el panel de Compras.
+- **Con Shippo** (se descartó EasyPost porque escondía la API key tras fondear el wallet).
+- `api/_shipping.js` cotiza USPS vía Shippo con **pesos estimados redondeados hacia arriba** (para no perder dinero); `api/shipping.js` es el endpoint; `api/checkout.js` suma el envío al pago de Stripe. En el checkout hay botón **"Calcular envío (USPS)"**.
+- **Probado en producción:** devuelve tarifas reales que cambian por peso y destino (ej. $5.83, $10.01, $14.31 según el caso).
+- **Token de PRUEBA de Shippo** en Vercel (`SHIPPO_API_KEY`). Para tarifas de producción, pedir el **Live Token** en Shippo (Settings > API > "Request Live Token", ~1 día hábil) y cambiarlo en Vercel.
+- **Regla de oro:** al enviar, la dueña **pesa el paquete real** y compra la etiqueta con ese peso.
+- **Pendiente (opcional):** botón "Comprar e imprimir etiqueta" en el panel de Compras.
 
 ---
 

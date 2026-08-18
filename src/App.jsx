@@ -6,6 +6,7 @@ import { LanguageProvider } from "./context/LanguageContext"
 import { ProductsProvider } from "./context/ProductsContext"
 import AccountPage from "./pages/AccountPage"
 import AdminPage from "./pages/AdminPage"
+import AdminOrdersPage from "./pages/AdminOrdersPage"
 import CartPage from "./pages/CartPage"
 import CategoryPage from "./pages/CategoryPage"
 import CheckoutPage from "./pages/CheckoutPage"
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: "pago-exitoso", element: <PagoExitosoPage /> },
       { path: "cuenta", element: <AccountPage /> },
       { path: "admin", element: <AdminPage /> },
+      { path: "admin/pedidos", element: <AdminOrdersPage /> },
       { path: "visita-citas", element: <PoliciesPage /> },
       { path: "404", element: <NotFoundPage /> },
       { path: "*", element: <NotFoundPage /> },

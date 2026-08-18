@@ -41,15 +41,22 @@ export default async function handler(req, res) {
       await db.collection("orders").add({
         reference: `VB-${session.id.slice(-8).toUpperCase()}`,
         status: "pagado",
+        // Estado del envio: "por-enviar" hasta que la admin compre la etiqueta.
+        shippingStatus: session.metadata?.method === "shipping" ? "por-enviar" : "recoger-en-tienda",
         paymentStatus: session.payment_status,
         amountTotal: (session.amount_total || 0) / 100,
         currency: session.currency,
+        weightOz: Number(session.metadata?.weightOz) || 0,
         customer: {
           email: session.customer_details?.email || "",
           name: session.metadata?.name || session.customer_details?.name || "",
           phone: session.metadata?.phone || "",
           method: session.metadata?.method || "",
-          address: session.metadata?.address || "",
+          street: session.metadata?.street || "",
+          address2: session.metadata?.address2 || "",
+          city: session.metadata?.city || "",
+          state: session.metadata?.state || "",
+          zip: session.metadata?.zip || "",
           eventType: session.metadata?.eventType || "",
           eventDate: session.metadata?.eventDate || "",
           notes: session.metadata?.notes || "",
@@ -59,6 +66,9 @@ export default async function handler(req, res) {
           quantity: li.quantity,
           amount: (li.amount_total || 0) / 100,
         })),
+        // Datos de la etiqueta (se llenan al comprarla)
+        labelUrl: "",
+        tracking: "",
         stripeSessionId: session.id,
         createdAt: new Date().toISOString(),
       })

@@ -3,7 +3,7 @@
 // para que nadie pueda alterar el total desde el navegador.
 import Stripe from "stripe"
 import { products as catalogProducts } from "../src/data/catalog.js"
-import { quoteUspsShipping } from "./_shipping.js"
+import { quoteUspsShipping, totalWeightOz } from "./_shipping.js"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -66,15 +66,20 @@ export default async function handler(req, res) {
       success_url: `${origin}/pago-exitoso?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/checkout`,
       customer_email: customer.email || undefined,
-      // Guardamos los datos del pedido para que el webhook los registre despues del pago.
+      // Guardamos los datos del pedido (direccion en piezas para poder comprar la etiqueta).
       metadata: {
         name: customer.name || "",
         phone: customer.phone || "",
         method: customer.method || "",
-        address: [customer.address, customer.address2, customer.city, customer.state, customer.zip].filter(Boolean).join(", "),
+        street: customer.address || "",
+        address2: customer.address2 || "",
+        city: customer.city || "",
+        state: customer.state || "",
+        zip: customer.zip || "",
         eventType: customer.eventType || "",
         eventDate: customer.eventDate || "",
         notes: customer.notes || "",
+        weightOz: String(totalWeightOz(items)),
       },
     })
 

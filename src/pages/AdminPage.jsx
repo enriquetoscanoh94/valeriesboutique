@@ -103,6 +103,7 @@ export default function AdminPage() {
         <p className="eyebrow">Panel de administración</p>
         <h1>Productos</h1>
         <p className="admin-sub">Agrega productos nuevos a la tienda. Aparecerán al instante en el catálogo.</p>
+        <Link className="button button-dark admin-orders-link" to="/admin/pedidos">Ver pedidos y etiquetas →</Link>
       </header>
 
       <div className="admin-layout">

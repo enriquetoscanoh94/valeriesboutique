@@ -322,9 +322,32 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .admin-list-name { margin: 0; font-size: 13px; font-weight: 500; }
 .admin-list-meta { margin: 3px 0 0; color: #8d7f83; font-size: 12px; }
 .admin-empty { color: #8d7f83; font-size: 13px; line-height: 1.6; }
+.admin-orders-link { margin-top: 16px; }
+
+/* ---------- Pedidos (admin) ---------- */
+.orders-list { display: grid; gap: 16px; }
+.order-card { padding: 22px; border: 1px solid #eadbe1; border-radius: 18px; background: #fff; }
+.order-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.order-ref { margin: 0; font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; }
+.order-date { margin: 2px 0 0; color: #8d7f83; font-size: 12px; }
+.order-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.order-badge { padding: 5px 12px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+.order-badge.paid { background: #eaf6ef; color: #2f7d54; }
+.order-badge.topack { background: #fbf0e4; color: #a5701f; }
+.order-badge.sent { background: #eaf0fb; color: #2f4fa5; }
+.order-badge.pickup { background: #f3eef1; color: #7e6b74; }
+.order-body { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 16px 0; padding: 16px 0; border-top: 1px solid #f0e6ea; border-bottom: 1px solid #f0e6ea; }
+.order-customer p { margin: 0 0 3px; font-size: 13px; }
+.order-address { color: #766b6f; }
+.order-lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.order-lines li { display: flex; justify-content: space-between; font-size: 13px; }
+.order-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.order-actions .button { min-height: 42px; padding: 10px 22px; font-size: 12px; }
+.order-tracking { color: #55494d; font-size: 12px; }
 
 @media (max-width: 900px) {
   .admin-layout { grid-template-columns: 1fr; }
+  .order-body { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 980px) {
