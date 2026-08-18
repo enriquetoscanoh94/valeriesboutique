@@ -19,7 +19,7 @@ const DEFAULT_WEIGHT_OZ = 32
 
 // Colchon que se suma al costo de envio que se le cobra al cliente (en dolares),
 // para que el negocio nunca pierda. Cambia este numero si quieres mas o menos margen.
-const HANDLING_BUFFER_USD = 3
+const HANDLING_BUFFER_USD = 2
 
 function weightForProduct(product) {
   return WEIGHT_OZ_BY_CATEGORY[product?.category] ?? DEFAULT_WEIGHT_OZ
