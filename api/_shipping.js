@@ -1,7 +1,6 @@
 // Cotizacion de envios USPS via Shippo (lado servidor).
 import { products as catalogProducts } from "../src/data/catalog.js"
 import { business } from "../src/data/business.js"
-import { getAdminDb } from "./_firebaseAdmin.js"
 
 // Peso estimado por tipo de producto, en ONZAS (redondeado HACIA ARRIBA
 // para que el cliente nunca pague de menos y el negocio no pierda).
@@ -39,7 +38,12 @@ export async function totalWeightOz(items) {
     let product = catalogProducts.find((p) => p.id === item.productId)
     if (!product) {
       try {
-        if (!db) db = getAdminDb()
+        // Solo cargamos firebase-admin si de verdad hace falta (producto de Firestore),
+        // asi la cotizacion normal no arrastra ese paquete pesado.
+        if (!db) {
+          const { getAdminDb } = await import("./_firebaseAdmin.js")
+          db = getAdminDb()
+        }
         const snap = await db.collection("products").doc(item.productId).get()
         if (snap.exists) product = snap.data()
       } catch { /* si falla, se usa el peso por defecto */ }
