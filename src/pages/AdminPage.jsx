@@ -9,8 +9,8 @@ import { categories, imageUrl, palette } from "../data/catalog"
 const paletteList = Object.values(palette)
 
 const EMPTY = {
-  nameEs: "", nameEn: "", category: categories[0].slug, subcategory: "0",
-  price: "", sizes: "", weightLb: "", descEs: "", descEn: "", featured: false,
+  nameEs: "", category: categories[0].slug, subcategory: "0",
+  price: "", sizes: "", weightLb: "", descEs: "", featured: false,
 }
 
 // Seccion "Productos" del panel (protegida por AdminLayout).
@@ -79,8 +79,9 @@ export default function AdminPage() {
       await addDoc(collection(db, "products"), {
         category: form.category,
         subcategory: String(form.subcategory),
-        name: { es: form.nameEs.trim(), en: (form.nameEn || form.nameEs).trim() },
-        description: { es: form.descEs.trim(), en: (form.descEn || form.descEs).trim() },
+        // Se guarda el mismo texto en ambos idiomas (la tienda es en español).
+        name: { es: form.nameEs.trim(), en: form.nameEs.trim() },
+        description: { es: form.descEs.trim(), en: form.descEs.trim() },
         price: Number(form.price),
         images: [url],
         imagePath: path,
@@ -123,10 +124,7 @@ export default function AdminPage() {
         <form className="admin-form" onSubmit={handleSubmit}>
           <h2>Agregar producto</h2>
 
-          <div className="field-row">
-            <div className="field"><label htmlFor="nameEs">Nombre (español) *</label><input id="nameEs" name="nameEs" value={form.nameEs} onChange={setField} /></div>
-            <div className="field"><label htmlFor="nameEn">Nombre (inglés)</label><input id="nameEn" name="nameEn" value={form.nameEn} onChange={setField} placeholder="Opcional" /></div>
-          </div>
+          <div className="field"><label htmlFor="nameEs">Nombre del producto *</label><input id="nameEs" name="nameEs" value={form.nameEs} onChange={setField} /></div>
 
           <div className="field-row">
             <div className="field">
@@ -172,8 +170,7 @@ export default function AdminPage() {
             </div>
           </div>
 
-          <div className="field"><label htmlFor="descEs">Descripción (español)</label><textarea id="descEs" name="descEs" value={form.descEs} onChange={setField} /></div>
-          <div className="field"><label htmlFor="descEn">Descripción (inglés)</label><textarea id="descEn" name="descEn" value={form.descEn} onChange={setField} placeholder="Opcional" /></div>
+          <div className="field"><label htmlFor="descEs">Descripción</label><textarea id="descEs" name="descEs" value={form.descEs} onChange={setField} /></div>
 
           <div className="field"><label htmlFor="photo">Foto del producto *</label><input id="photo" type="file" accept="image/*" onChange={(event) => setFile(event.target.files[0])} /></div>
 
