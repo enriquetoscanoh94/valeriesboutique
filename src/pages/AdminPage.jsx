@@ -172,7 +172,14 @@ export default function AdminPage() {
 
           <div className="field"><label htmlFor="descEs">Descripción</label><textarea id="descEs" name="descEs" value={form.descEs} onChange={setField} /></div>
 
-          <div className="field"><label htmlFor="photo">Foto del producto *</label><input id="photo" type="file" accept="image/*" onChange={(event) => setFile(event.target.files[0])} /></div>
+          <div className="field">
+            <label htmlFor="photo">Foto del producto *</label>
+            <label className="file-picker">
+              <input id="photo" type="file" accept="image/*" onChange={(event) => setFile(event.target.files[0] || null)} />
+              <span className="file-picker-btn">Elegir foto</span>
+              <span className="file-picker-name">{file ? file.name : "Ninguna foto seleccionada"}</span>
+            </label>
+          </div>
 
           <label className="admin-check"><input type="checkbox" name="featured" checked={form.featured} onChange={setField} /> Mostrar como destacado en la página principal</label>
 

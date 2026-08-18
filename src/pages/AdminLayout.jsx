@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext"
 // Marco comun del panel: encabezado + pestañas + proteccion de admin.
 // La verificacion de "es admin" vive SOLO aqui (no se repite en cada seccion).
 export default function AdminLayout() {
-  const { user, loading, isAdmin, logout } = useAuth()
+  const { user, loading, isAdmin } = useAuth()
 
   if (loading) return <div className="section"><p>Cargando…</p></div>
   if (!user || !isAdmin) return <Navigate to="/cuenta" replace />
@@ -19,7 +19,6 @@ export default function AdminLayout() {
         </div>
         <div className="admin-shell-user">
           <span>{user.displayName || user.email}</span>
-          <button className="account-logout" onClick={() => logout()}>Cerrar sesión</button>
         </div>
       </header>
 
