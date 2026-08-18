@@ -62,7 +62,10 @@ export async function quoteUspsShipping(zip, items) {
   if (!rates.length) return null
 
   const cheapest = rates.reduce((a, b) => (Number(a.amount) <= Number(b.amount) ? a : b))
-  return { amount: Number(cheapest.amount), service: cheapest.servicelevel?.name || "USPS" }
+  // Redondeamos HACIA ARRIBA al siguiente dolar: el cliente paga un poco de mas
+  // y el negocio nunca pierde en el envio.
+  const amount = Math.ceil(Number(cheapest.amount))
+  return { amount, service: cheapest.servicelevel?.name || "USPS" }
 }
 
 // Direccion de remitente (aparece en la etiqueta).
