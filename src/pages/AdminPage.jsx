@@ -20,6 +20,9 @@ export default function AdminPage() {
 
   const [form, setForm] = useState(EMPTY)
   const [colors, setColors] = useState([])
+  const [customColors, setCustomColors] = useState([]) // colores propios: [{ name, hex }]
+  const [newColorName, setNewColorName] = useState("")
+  const [newColorHex, setNewColorHex] = useState("#d99aaa")
   const [file, setFile] = useState(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState("")
@@ -38,6 +41,15 @@ export default function AdminPage() {
     setColors((current) => current.includes(value) ? current.filter((item) => item !== value) : [...current, value])
   }
 
+  // Agrega un color que no esta en la paleta (nombre + tono elegido).
+  const addCustomColor = () => {
+    const name = newColorName.trim()
+    if (!name) return
+    setCustomColors([...customColors, { name, hex: newColorHex }])
+    setNewColorName("")
+  }
+  const removeCustomColor = (index) => setCustomColors(customColors.filter((_, i) => i !== index))
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     setError(""); setOk("")
@@ -55,7 +67,15 @@ export default function AdminPage() {
 
       // 2) Guardar el producto en la base de datos con el mismo formato del catalogo.
       const subIndex = Number(form.subcategory)
-      const chosenColors = paletteList.filter((color) => colors.includes(color.value))
+      // Colores de la paleta + los colores propios que agrego la duena.
+      const chosenColors = [
+        ...paletteList.filter((color) => colors.includes(color.value)),
+        ...customColors.map((color) => ({
+          name: { es: color.name, en: color.name },
+          value: color.name.toLowerCase().replace(/\s+/g, "-"),
+          hex: color.hex,
+        })),
+      ]
       await addDoc(collection(db, "products"), {
         category: form.category,
         subcategory: String(form.subcategory),
@@ -75,7 +95,7 @@ export default function AdminPage() {
       })
 
       setOk("Producto agregado ✓")
-      setForm(EMPTY); setColors([]); setFile(null)
+      setForm(EMPTY); setColors([]); setCustomColors([]); setFile(null)
       event.target.reset()
     } catch (err) {
       setError("No se pudo guardar: " + (err.message || err.code || "error"))
@@ -138,6 +158,17 @@ export default function AdminPage() {
                   <span style={{ background: color.hex }} />{color.name.es}
                 </button>
               ))}
+              {customColors.map((color, index) => (
+                <button type="button" key={`custom-${index}`} className="admin-color is-on" onClick={() => removeCustomColor(index)} title="Quitar">
+                  <span style={{ background: color.hex }} />{color.name} ✕
+                </button>
+              ))}
+            </div>
+            <div className="admin-add-color">
+              <input type="color" aria-label="Tono del color" value={newColorHex} onChange={(event) => setNewColorHex(event.target.value)} />
+              <input type="text" placeholder="¿No está tu color? Escríbelo (ej. rosa palo)" value={newColorName} onChange={(event) => setNewColorName(event.target.value)}
+                onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); addCustomColor() } }} />
+              <button type="button" className="button button-outline" onClick={addCustomColor}>Agregar color</button>
             </div>
           </div>
 

@@ -326,6 +326,10 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .admin-color { display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border: 1px solid #d9ccd1; border-radius: 999px; background: #fff; font: inherit; font-size: 12px; cursor: pointer; }
 .admin-color span { width: 15px; height: 15px; border-radius: 50%; border: 1px solid rgba(0,0,0,.12); }
 .admin-color.is-on { border-color: #b76e79; background: #fbf0f4; font-weight: 500; }
+.admin-add-color { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+.admin-add-color input[type="color"] { width: 42px; height: 40px; padding: 2px; border: 1px solid #d9ccd1; border-radius: 10px; background: #fff; cursor: pointer; }
+.admin-add-color input[type="text"] { flex: 1; min-width: 180px; padding: 11px 14px; border: 1px solid #d9ccd1; border-radius: 10px; font: inherit; font-size: 13px; }
+.admin-add-color .button { min-height: 40px; padding: 9px 18px; font-size: 12px; }
 .admin-check { display: flex; align-items: center; gap: 9px; font-size: 13px; color: #55494d; }
 .admin-ok { margin: 0; color: #2f7d54; font-size: 13px; font-weight: 500; }
 .admin-hint { margin: -4px 0 0; color: #8d7f83; font-size: 12px; line-height: 1.5; }
