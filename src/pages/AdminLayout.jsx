@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { NavLink, Navigate, Outlet } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 
@@ -29,7 +30,9 @@ export default function AdminLayout() {
       </nav>
 
       <div className="admin-content">
-        <Outlet />
+        <Suspense fallback={<p>Cargando…</p>}>
+          <Outlet />
+        </Suspense>
       </div>
     </div>
   )
