@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext"
 import { useLanguage } from "../context/LanguageContext"
 import { useProducts } from "../context/ProductsContext"
 import { imageUrl } from "../data/catalog"
+import { usStates } from "../data/usStates"
 
 const EMPTY_FORM = {
   name: "", email: "", phone: "",
@@ -149,7 +150,13 @@ export default function CheckoutPage() {
               <div className="field"><label htmlFor="address2">{t.checkout.address2}</label><input id="address2" name="address2" value={form.address2} onChange={setField} /></div>
               <div className="field-row thirds">
                 <div className="field"><label htmlFor="city">{t.checkout.city} *</label><input id="city" name="city" value={form.city} onChange={setField} /></div>
-                <div className="field"><label htmlFor="state">{t.checkout.state} *</label><input id="state" name="state" value={form.state} onChange={setField} /></div>
+                <div className="field">
+                  <label htmlFor="state">{t.checkout.state} *</label>
+                  <select id="state" name="state" value={form.state} onChange={setField}>
+                    <option value="">—</option>
+                    {usStates.map((state) => <option key={state.code} value={state.code}>{state.name}</option>)}
+                  </select>
+                </div>
                 <div className="field"><label htmlFor="zip">{t.checkout.zip} *</label><input id="zip" name="zip" inputMode="numeric" value={form.zip} onChange={setField} /></div>
               </div>
               <button type="button" className="button button-outline calc-shipping" onClick={calcShipping} disabled={shippingLoading || !form.zip.trim()}>

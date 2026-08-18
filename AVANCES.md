@@ -65,7 +65,13 @@ Tienda en línea real de Valerie's Boutique (19 W Market St, Salinas, CA · tel.
 - **Probado en producción:** devuelve tarifas reales que cambian por peso y destino (ej. $5.83, $10.01, $14.31 según el caso).
 - **Token de PRUEBA de Shippo** en Vercel (`SHIPPO_API_KEY`). Para tarifas de producción, pedir el **Live Token** en Shippo (Settings > API > "Request Live Token", ~1 día hábil) y cambiarlo en Vercel.
 - **Regla de oro:** al enviar, la dueña **pesa el paquete real** y compra la etiqueta con ese peso.
-- **Pendiente (opcional):** botón "Comprar e imprimir etiqueta" en el panel de Compras.
+
+## ✅ Fase 6 — Pedidos + etiquetas en el panel admin (LISTO, modo prueba)
+
+- **Webhook de Stripe activo:** cada pago se guarda como pedido en Firestore (con dirección en piezas + peso). Se usa una **cuenta de servicio de Firebase** (`FIREBASE_SERVICE_ACCOUNT`) y el **secreto del webhook** (`STRIPE_WEBHOOK_SECRET`), ambos en Vercel.
+- **Panel `/admin/pedidos`:** la dueña ve todas las ventas pagadas (cliente, dirección, productos, monto, estado).
+- **Botón "Comprar e imprimir etiqueta":** con un clic compra la etiqueta USPS más barata (vía Shippo, ruta `api/buy-label`, solo admin), abre el **PDF para imprimir** y guarda el **rastreo**; el pedido pasa a "Enviado". **Sin entrar a Shippo.**
+- **Falta para etiquetas REALES:** el **Live Token de Shippo** (solicitado, ~1 día) + un método de pago en Shippo para el franqueo. En modo prueba las etiquetas son de ensayo (gratis).
 
 ---
 

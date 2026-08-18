@@ -47,13 +47,13 @@ export default function ProductPage() {
           <p className="eyebrow">{localize(category.name)}</p><h1>{localize(product.name)}</h1>
           <p className="product-detail-price">${product.price.toFixed(2)}</p><p className="installments">{t.product.payments} ${(product.price / 4).toFixed(2)} · Afterpay</p>
           <p className="product-description">{localize(product.description)}</p>
-          {product.sizes.length > 0 && <fieldset className="option-group"><legend>{t.product.selectSize}</legend><div className="size-options">{product.sizes.map((item) => <button type="button" key={item} className={size === item ? "selected" : ""} onClick={() => { setSize(item); setError("") }}>{item}</button>)}</div></fieldset>}
-          {product.colors.length > 0 && <fieldset className="option-group"><legend>{t.product.selectColor}</legend><div className="color-options">{product.colors.map((item) => <button type="button" key={item.value} className={color === item.value ? "selected" : ""} onClick={() => { setColor(item.value); setError("") }}><span style={{ background: item.hex }} />{localize(item.name)}</button>)}</div></fieldset>}
+          {product.sizes.length > 0 && <fieldset className={`option-group ${error === t.product.sizeRequired ? "option-group-error" : ""}`}><legend>{t.product.selectSize} *</legend><div className="size-options">{product.sizes.map((item) => <button type="button" key={item} className={size === item ? "selected" : ""} onClick={() => { setSize(item); setError("") }}>{item}</button>)}</div></fieldset>}
+          {product.colors.length > 0 && <fieldset className={`option-group ${error === t.product.colorRequired ? "option-group-error" : ""}`}><legend>{t.product.selectColor} *</legend><div className="color-options">{product.colors.map((item) => <button type="button" key={item.value} className={color === item.value ? "selected" : ""} onClick={() => { setColor(item.value); setError("") }}><span style={{ background: item.hex }} />{localize(item.name)}</button>)}</div></fieldset>}
+          {error && <p className="product-error" role="alert">⚠ {error}</p>}
           <div className="purchase-row">
             <label className="quantity-picker"><span className="sr-only">{t.cart.quantity}</span><button type="button" onClick={() => setQuantity((value) => Math.max(1, value - 1))}>−</button><output>{quantity}</output><button type="button" onClick={() => setQuantity((value) => value + 1)}>+</button></label>
             <button className="button button-dark add-button" onClick={handleAdd}>{added ? `✓ ${t.product.added}` : t.actions.add}</button>
           </div>
-          {error && <p className="form-error" role="alert">{error}</p>}
           <div className="pickup-note"><span>⌂</span><p>{t.product.pickup}<small>{t.product.shippingNote} · 19 W Market St, Salinas, CA</small></p></div>
         </div>
       </section>

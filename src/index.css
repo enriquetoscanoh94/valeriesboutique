@@ -180,6 +180,9 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .size-options, .color-options { display: flex; flex-wrap: wrap; gap: 9px; }
 .size-options button { min-width: 45px; height: 42px; border: 1px solid #dacdd2; border-radius: 10px; background: white; }
 .size-options button.selected, .color-options button.selected { border-color: #141414; box-shadow: 0 0 0 1px #141414; }
+.option-group-error legend { color: #a33148; }
+.option-group-error .size-options button, .option-group-error .color-options button { border-color: #d98a9a; }
+.product-error { margin: 4px 0 14px; padding: 10px 14px; border-radius: 10px; background: #fbeaee; color: #a33148; font-size: 13px; font-weight: 500; }
 .color-options button { min-height: 42px; padding: 8px 13px; display: flex; align-items: center; gap: 8px; border: 1px solid #dacdd2; border-radius: 999px; background: white; font-size: 11px; }
 .color-options button span { width: 18px; height: 18px; border: 1px solid rgba(0,0,0,.12); border-radius: 50%; }
 .purchase-row { display: grid; grid-template-columns: 116px 1fr; gap: 12px; margin-top: 30px; }
